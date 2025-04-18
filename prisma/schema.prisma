@@ -1,0 +1,241 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum Role {
+  USER
+  AUTHOR
+  ADMIN
+}
+
+enum ReadingStatus {
+  TO_READ
+  READING
+  FINISHED
+}
+
+enum Genre {
+  FICTION
+  NON_FICTION
+  SCIENCE_FICTION
+  FANTASY
+  MYSTERY
+  THRILLER
+  ROMANCE
+  BIOGRAPHY
+  HISTORY
+  POETRY
+  SELF_HELP
+  CHILDREN
+  CLASSICS
+  OTHER
+}
+
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique
+  passwordHash String
+  name         String
+  bio          String?
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  ratings             Rating[]
+  reviews             Review[]
+  authoredBooks       Book[]              @relation("BookAuthor")
+  authorApplication   AuthorApplication?  @relation("AuthorApplication")
+  reviewedApplication AuthorApplication[] @relation("ReviewedByAdmin")
+
+  following Follow[] @relation("UserFollowing")
+  followers Follow[] @relation("UserFollowers")
+
+  ownedCollections  Collection[]
+  collectionEntries CollectionBook[]
+  sharedWith        SharedCollectionAccess[]
+
+  refreshTokens RefreshToken[]
+  auditLogs     AuditLog[]
+}
+
+model Book {
+  id            String   @id @default(uuid()) @db.Uuid
+  title         String
+  description   String
+  genre         Genre
+  authorId      String   @db.Uuid
+  author        User     @relation("BookAuthor", fields: [authorId], references: [id])
+  publishedYear Int
+  isbn          String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+
+  ratings Rating[]
+  reviews Review[]
+
+  collectionLinks CollectionBook[]
+  tags            BookTag[]
+
+  @@index([genre])
+  @@index([authorId])
+  @@index([genre, authorId])
+}
+
+model Rating {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  bookId    String   @db.Uuid
+  rating    Int //1-5
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@unique([userId, bookId]) // Prevent duplicate ratings
+  @@index([rating])
+}
+
+model Review {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String   @db.Uuid
+  bookId     String   @db.Uuid
+  reviewText String
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@unique([userId, bookId]) // One review per user per book
+}
+
+model Follow {
+  id          String   @id @default(uuid()) @db.Uuid
+  followerId  String   @db.Uuid
+  followingId String   @db.Uuid
+  createdAt   DateTime @default(now())
+
+  follower  User @relation("UserFollowing", fields: [followerId], references: [id])
+  following User @relation("UserFollowers", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId]) // No duplicate follows
+  @@index([followingId])
+  @@index([followerId])
+}
+
+model AuthorApplication {
+  id        String            @id @default(uuid()) @db.Uuid
+  userId    String            @unique @db.Uuid
+  status    ApplicationStatus @default(PENDING)
+  bio       String?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  reviewedById String?   @db.Uuid
+  reviewedAt   DateTime?
+  reason       String?
+
+  user       User  @relation("AuthorApplication", fields: [userId], references: [id])
+  reviewedBy User? @relation("ReviewedByAdmin", fields: [reviewedById], references: [id])
+}
+
+model Collection {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  userId      String   @db.Uuid
+  description String?
+  isPublic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user  User             @relation(fields: [userId], references: [id])
+  books CollectionBook[]
+
+  sharedWith SharedCollectionAccess[]
+}
+
+model CollectionBook {
+  id            String        @id @default(uuid()) @db.Uuid
+  collectionId  String        @db.Uuid
+  bookId        String        @db.Uuid
+  userId        String        @db.Uuid
+  readingStatus ReadingStatus @default(TO_READ)
+  addedAt       DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  collection Collection @relation(fields: [collectionId], references: [id])
+  book       Book       @relation(fields: [bookId], references: [id])
+  user       User       @relation(fields: [userId], references: [id])
+
+  @@unique([collectionId, bookId])
+  @@index([readingStatus])
+  @@index([userId, readingStatus])
+}
+
+model SharedCollectionAccess {
+  id           String @id @default(uuid()) @db.Uuid
+  collectionId String @db.Uuid
+  userId       String @db.Uuid
+
+  collection Collection @relation(fields: [collectionId], references: [id])
+  user       User       @relation(fields: [userId], references: [id])
+
+  @@unique([collectionId, userId])
+}
+
+model Tag {
+  id    String    @id @default(uuid()) @db.Uuid
+  name  String    @unique
+  books BookTag[]
+}
+
+model BookTag {
+  id     String @id @default(uuid()) @db.Uuid
+  bookId String @db.Uuid
+  tagId  String @db.Uuid
+
+  book Book @relation(fields: [bookId], references: [id])
+  tag  Tag  @relation(fields: [tagId], references: [id])
+
+  @@unique([bookId, tagId])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  token     String   @unique
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+}
+
+model AuditLog {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String?  @db.Uuid
+  model     String
+  operation String
+  recordId  String
+  oldData   Json?
+  newData   Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([model, operation])
+  @@index([userId])
+}

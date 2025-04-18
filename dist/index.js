@@ -1,0 +1,31 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const morgan_1 = __importDefault(require("morgan"));
+const dotenv_1 = __importDefault(require("dotenv"));
+const helmentConfig_1 = __importDefault(require("./config/helmentConfig"));
+const rateLimitHandler_1 = __importDefault(require("./middlewares/rateLimitHandler"));
+const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
+const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
+app.use((0, cors_1.default)());
+app.use((0, cookie_parser_1.default)());
+app.use((0, morgan_1.default)("common"));
+dotenv_1.default.config();
+app.use(helmentConfig_1.default);
+app.use(rateLimitHandler_1.default);
+// app.use(csrfMiddleware);
+app.use("/auth", authRoutes_1.default);
+app.use("/user", userRoutes_1.default);
+// app.use(errorHandler);
+const port = process.env.PORT || 5001;
+app.listen(port, () => {
+    console.log(`Server is up on port ${port}`);
+});
