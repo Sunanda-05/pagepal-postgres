@@ -54,7 +54,7 @@ export const updateReview = async (
     const userId = request.user?.id;
     if (!userId) throw new ApiError(400, "No User ID provided");
 
-    const reviewId = request?.params?.id;
+    const reviewId = request?.params?.reviewId;
     if (!reviewId) throw new ApiError(400, "No Review ID provided");
 
     const reviewText = request.body.review;
@@ -78,7 +78,7 @@ export const deleteReview = async (
     const userId = request.user?.id;
     if (!userId) throw new ApiError(400, "No User ID provided");
 
-    const reviewId = request?.params?.id;
+    const reviewId = request?.params?.reviewId;
     if (!reviewId) throw new ApiError(400, "No Review ID provided");
 
     const deletedReview = await deleteReviewService(reviewId, userId);

@@ -59,7 +59,7 @@ export const getFilteredBooks = async (
   }
 };
 
-export const getBooksById = async (
+export const getBookById = async (
   request: Request,
   response: Response,
   next: NextFunction
