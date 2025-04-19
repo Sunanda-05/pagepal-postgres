@@ -7,7 +7,7 @@ import {
 import authMiddleware from "../middlewares/authMiddleware";
 import { setUserContext } from "../config/context";
 import { asyncHandler } from "../utils/asyncHandler";
-import { followUser, unfollowUser } from "src/controllers/followController";
+import { followUser, unfollowUser } from "../controllers/followController";
 
 const router = Router({ mergeParams: true });
 

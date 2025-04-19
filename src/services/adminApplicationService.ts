@@ -1,4 +1,4 @@
-import { ApplicationStatus } from "../../generated";
+import { ApplicationStatus, Role } from "../../generated";
 import prisma from "../utils/db";
 
 const getAllApplyService = async (status?: ApplicationStatus) => {
@@ -20,17 +20,32 @@ const reviewApplyService = async (
   reason?: string
 ) => {
   try {
-    const application = await prisma.authorApplication.update({
-      where: { id, status: "PENDING" },
-      data: {
-        status,
-        reviewedById: adminId,
-        reason,
-        reviewedAt: new Date(),
-      },
-    });
+    return await prisma.$transaction(async (tx) => {
+      const application = await tx.authorApplication.update({
+        where: {
+          id,
+          status: "PENDING",
+        },
+        data: {
+          status,
+          reviewedById: adminId,
+          reason,
+          reviewedAt: new Date(),
+        },
+        include: {
+          user: true,
+        },
+      });
 
-    return application;
+      if (status === "APPROVED") {
+        await tx.user.update({
+          where: { id: application.userId },
+          data: { role: Role.AUTHOR },
+        });
+      }
+
+      return application;
+    });
   } catch (error) {
     console.error(error); //!TODO check if application not found
     throw new Error("Reviewing application failed");

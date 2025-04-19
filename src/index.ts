@@ -11,11 +11,11 @@ import errorHandler from "./middlewares/errorHandler";
 
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
-import bookRoutes from "./routes/userRoutes";
-import collectionRoutes from "./routes/userRoutes";
-import tagRoutes from "./routes/userRoutes";
-import adminApplicationRoutes from "./routes/userRoutes";
-import authorApplicationRoutes from "./routes/userRoutes";
+import bookRoutes from "./routes/bookRoutes";
+import collectionRoutes from "./routes/collectionRoutes";
+import tagRoutes from "./routes/tagRoutes";
+import adminApplicationRoutes from "./routes/adminApplicationRoutes";
+import authorApplicationRoutes from "./routes/authorApplicationRoutes";
 
 const app = express();
 app.use(express.json());
