@@ -1,6 +1,7 @@
+import ApiError from "../utils/ApiError";
 import prisma from "../utils/db";
 
-const addBookTag = async (bookId: string, tagId: string, authorId: string) => {
+const addBookTagService = async (bookId: string, tagId: string, authorId: string) => {
   try {
     const [book, tag] = await Promise.all([
       prisma.book.findUnique({
@@ -16,8 +17,8 @@ const addBookTag = async (bookId: string, tagId: string, authorId: string) => {
       }),
     ]);
 
-    if (!book) throw new Error("Book not found or not owned by this author");
-    if (!tag) throw new Error("Tag not found");
+    if (!book) throw new ApiError(403, "Book not found or not owned by this author");
+    if (!tag) throw new ApiError(404, "Tag not found");
 
     const bookTag = await prisma.bookTag.create({
       data: {
@@ -33,4 +34,4 @@ const addBookTag = async (bookId: string, tagId: string, authorId: string) => {
   }
 };
 
-export { addBookTag };
+export { addBookTagService };

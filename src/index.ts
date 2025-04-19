@@ -29,7 +29,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 
 
-// app.use(errorHandler);
+app.use(errorHandler);
 const port = process.env.PORT || 5001;
 app.listen(port, () => {
   console.log(`Server is up on port ${port}`);

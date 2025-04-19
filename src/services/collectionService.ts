@@ -159,10 +159,10 @@ const updateCollectionService = async (
   }
 };
 
-const deleteCollectionService = async (collectionId: string) => {
+const deleteCollectionService = async (collectionId: string, userId: string) => {
   try {
     const deletedCollection = await prisma.collection.delete({
-      where: { id: collectionId },
+      where: { id: collectionId, userId },
     });
     return deletedCollection;
   } catch (error) {

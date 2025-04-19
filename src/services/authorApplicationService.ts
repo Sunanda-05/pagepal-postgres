@@ -1,4 +1,4 @@
-import { Collection } from "../../generated";
+import ApiError from "../utils/ApiError";
 import prisma from "../utils/db";
 
 const applyAuthorService = async (userId: string, bio?: string) => {
@@ -9,7 +9,7 @@ const applyAuthorService = async (userId: string, bio?: string) => {
         role: "AUTHOR",
       },
     });
-    if (alreadyAuthor) throw new Error("You are already an author");
+    if (alreadyAuthor) throw new ApiError(400, "You are already an author");
 
     const application = await prisma.authorApplication.create({
       data: {

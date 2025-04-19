@@ -1,4 +1,4 @@
-import { Collection } from "../../generated";
+import ApiError from "../utils/ApiError";
 import prisma from "../utils/db";
 
 const shareCollectionService = async (
@@ -21,9 +21,9 @@ const shareCollectionService = async (
       }),
     ]);
 
-    if (!user) throw new Error("User not found");
+    if (!user) throw new ApiError(404, "User not found");
     if (!ownedCollection)
-      throw new Error("Collection not found or not owned by user");
+      throw new ApiError(403, "Collection not found or not owned by user");
 
     const sharedAccess = await prisma.sharedCollectionAccess.create({
       data: {

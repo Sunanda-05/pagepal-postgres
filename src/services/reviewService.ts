@@ -1,5 +1,6 @@
 import { Review } from "generated";
 import prisma from "../utils/db";
+import ApiError from "../utils/ApiError";
 
 const reviewBookService = async (
   bookId: string,
@@ -10,8 +11,8 @@ const reviewBookService = async (
     const bookRef = await prisma.book.findUnique({
       where: { id: bookId },
     });
-    if (bookRef) {
-      throw new Error("Book ISBN already exists");
+    if (!bookRef) {
+      throw new ApiError(404, "Book Not found");
     }
 
     const reviewInfo = await prisma.review.create({
@@ -69,7 +70,7 @@ const updateReviewService = async (
   }
 };
 
-const deletReviewService = async (id: string, userId: string) => {
+const deleteReviewService = async (id: string, userId: string) => {
   try {
     const review = await prisma.review.delete({
       where: { id, userId },
@@ -85,5 +86,5 @@ export {
   reviewBookService,
   getBookReviewService,
   updateReviewService,
-  deletReviewService,
+  deleteReviewService,
 };

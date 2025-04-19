@@ -45,7 +45,7 @@ export const followUser = async (request: Request, response: Response) => {
       return;
     }
     const follow = await followUserService(userId, followingId);
-    response.status(200).json(follow);
+    response.status(201).json(follow);
   } catch (error) {
     console.error("Error in Register User:", error);
     response.status(500).json({ error: "Internal server error." });

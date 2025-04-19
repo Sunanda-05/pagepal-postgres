@@ -1,8 +1,9 @@
+import ApiError from "../utils/ApiError";
 import { CollectionBook } from "../../generated";
 import prisma from "../utils/db";
 
 const addCollectionBookService = async (
-  details: Omit<CollectionBook, "id" | "createdAt" | "updatedAt">
+  details: Omit<CollectionBook, "id" | "addedAt" | "updatedAt">
 ) => {
   try {
     const findBook = prisma.book.findUnique({
@@ -16,9 +17,9 @@ const addCollectionBookService = async (
       findCollection,
     ]);
 
-    if (!book) throw new Error("Book not found");
+    if (!book) throw new ApiError(404, "Book not found");
     if (!ownedCollection)
-      throw new Error("Collection not found or not owned by user");
+      throw new ApiError(403, "Collection not found or not owned by user");
 
     const addedCollectionBook = await prisma.collectionBook.create({
       data: details,
@@ -39,8 +40,8 @@ const deleteCollectionBookService = async (
 ) => {
   try {
     if (!bookId && !(collectionId && id)) {
-      throw new Error(
-        "Missing required parameters: bookId or collectionId and id"
+      throw new ApiError(
+        400, "Missing required parameters: bookId or collectionId and id"
       );
     }
 
@@ -61,6 +62,7 @@ const deleteCollectionBookService = async (
               collectionId,
               bookId,
             },
+            userId
           },
         })
       : null;
@@ -70,9 +72,9 @@ const deleteCollectionBookService = async (
       findCollectionBook,
     ]);
 
-    if (!book) throw new Error("Book not found");
+    if (!book) throw new ApiError(404, "Book not found");
     if (!ownedCollection)
-      throw new Error("Collection not found or not owned by user");
+      throw new ApiError(403, "Collection not found or not owned by user");
 
     const removedCollectionBook = await prisma.collectionBook.delete({
       where: {

@@ -1,3 +1,4 @@
+import ApiError from "../utils/ApiError";
 import prisma from "../utils/db";
 
 const getFollowersByIdService = async (id: string) => {
@@ -49,7 +50,7 @@ const getFollowingByIdService = async (id: string) => {
 const followUserService = async (id: string, followingId: string) => {
   try {
     if (id === followingId) {
-      throw new Error("Users cannot follow themselves");
+      throw new ApiError(400, "Users cannot follow themselves");
     }
     const [follower, following] = await Promise.all([
       prisma.user.findUnique({
@@ -81,11 +82,11 @@ const followUserService = async (id: string, followingId: string) => {
     ]);
 
     if (!follower || !following) {
-      throw new Error("One or both users not found");
+      throw new ApiError(404, "One or both users not found");
     }
 
     if (follower?.following.length > 0 || following?.followers.length > 0) {
-      throw new Error("Already following this user");
+      throw new ApiError(400, "Already following this user");
     }
 
     const newFollow = await prisma.follow.create({
@@ -105,7 +106,7 @@ const followUserService = async (id: string, followingId: string) => {
 const unfollowUserService = async (id: string, followingId: string) => {
   try {
     if (id === followingId) {
-      throw new Error("Users cannot unfollow themselves");
+      throw new ApiError(400, "Users cannot unfollow themselves");
     }
     const [follower, following] = await Promise.all([
       prisma.user.findUnique({
@@ -137,11 +138,11 @@ const unfollowUserService = async (id: string, followingId: string) => {
     ]);
 
     if (!follower || !following) {
-      throw new Error("One or both users not found");
+      throw new ApiError(404, "One or both users not found");
     }
 
     if (follower?.following.length === 0 || following?.followers.length === 0) {
-      throw new Error("Not following this user");
+      throw new ApiError(400, "Not following this user");
     }
 
     const unfollow = await prisma.follow.delete({
@@ -154,7 +155,7 @@ const unfollowUserService = async (id: string, followingId: string) => {
     });
 
     if (!unfollow) {
-      throw new Error("Not following this user");
+      throw new ApiError(400,"Not following this user");
     }
     return unfollow;
   } catch (error) {

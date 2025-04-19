@@ -1,4 +1,5 @@
 import prisma from "../utils/db";
+import ApiError from '../utils/ApiError'
 
 const rateBookService = async (
   bookId: string,
@@ -9,8 +10,8 @@ const rateBookService = async (
     const bookRef = await prisma.book.findUnique({
       where: { id: bookId },
     });
-    if (bookRef) {
-      throw new Error("Book ISBN already exists");
+    if (!bookRef) {
+      throw new ApiError(404, "Book not found.");
     }
 
     const ratedInfo = await prisma.rating.create({

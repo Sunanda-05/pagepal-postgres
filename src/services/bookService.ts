@@ -1,6 +1,7 @@
 import { Query, FilterQuery } from "types/book";
 import prisma from "../utils/db";
 import { Book } from "../../generated";
+import ApiError from "../utils/ApiError";
 
 const getAllBooksService = async (query: Query) => {
   const {
@@ -51,7 +52,7 @@ const getAllBooksService = async (query: Query) => {
   };
 };
 
-const getFilteredBooks = async (query: FilterQuery) => {
+const getFilteredBooksService = async (query: FilterQuery) => {
   const {
     page = 1,
     limit = 10,
@@ -143,14 +144,13 @@ const getBookByIdService = async (id: string) => {
 };
 
 const addBookService = async (
-  id: string,
   bookDetails: Omit<Book, "id" | "createdAt" | "updatedAt" | "deletedAt">
 ) => {
   const isbnBook = await prisma.book.findUnique({
     where: { isbn: bookDetails.isbn },
   });
   if (isbnBook) {
-    throw new Error("Book ISBN already exists");
+    throw new ApiError(400, "Book ISBN already exists");
   }
 
   const addedBook = await prisma.book.create({
@@ -177,7 +177,7 @@ const updateBookService = async (
   }
 };
 
-const deletBookService = async (id: string, authorId: string) => {
+const deleteBookService = async (id: string, authorId: string) => {
   try {
     const book = await prisma.book.update({
       where: { id, authorId },
@@ -194,9 +194,9 @@ const deletBookService = async (id: string, authorId: string) => {
 
 export {
   getAllBooksService,
-  getFilteredBooks,
+  getFilteredBooksService,
   getBookByIdService,
   addBookService,
   updateBookService,
-  deletBookService,
+  deleteBookService,
 };
