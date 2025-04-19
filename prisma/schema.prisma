@@ -68,6 +68,9 @@ model User {
 
   refreshTokens RefreshToken[]
   auditLogs     AuditLog[]
+
+  @@index([role])
+  @@index([id, role])
 }
 
 model Book {
