@@ -1,0 +1,22 @@
+[
+  {
+    "id": "d451b0d8-c163-418c-9cda-be00e7f94c74",
+    "name": "Inspiring"
+  },
+  {
+    "id": "ae9e967c-903e-426b-9f26-039b1cf9ee8b",
+    "name": "Adventure"
+  },
+  {
+    "id": "3c6a3a80-5940-4c1b-a53e-b564a2dcb7f1",
+    "name": "Classic"
+  },
+  {
+    "id": "74360215-49a7-4248-9b09-8e475e869d4e",
+    "name": "Tech"
+  },
+  {
+    "id": "1ff6640f-a07c-4e1b-ba3d-fa4e94e817a6",
+    "name": "Psychology"
+  }
+]

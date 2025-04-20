@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1606e827-70c7-451f-82ac-d6d044f7aa9b",
+    "followerId": "7ce206ae-4452-49a9-8234-547d9e266291",
+    "followingId": "2064b2e3-1cee-4914-80b2-48207dbd1a4d",
+    "createdAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "8868f94c-77aa-4323-b763-a8e18cb953bc",
+    "followerId": "2064b2e3-1cee-4914-80b2-48207dbd1a4d",
+    "followingId": "7ce206ae-4452-49a9-8234-547d9e266291",
+    "createdAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "3d16a5cf-b297-4f94-9355-4d6cb06dc358",
+    "followerId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "followingId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "createdAt": "2025-04-20T09:59:07.548296Z"
+  }
+]

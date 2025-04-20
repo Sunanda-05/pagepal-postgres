@@ -1,0 +1,62 @@
+[
+  {
+    "id": "f80fca49-6be8-4e98-b7e2-21dde8d958be",
+    "title": "Book 1",
+    "description": "Description for Book 1",
+    "genre": "NON_FICTION",
+    "authorId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "publishedYear": 2019,
+    "isbn": "978-3-446019139",
+    "createdAt": "2025-04-20T09:59:07.546296Z",
+    "updatedAt": "2025-04-20T09:59:07.546296Z",
+    "deletedAt": null
+  },
+  {
+    "id": "f5a948a2-64c0-40fe-a6d4-d1b8061c8d07",
+    "title": "Book 2",
+    "description": "Description for Book 2",
+    "genre": "MYSTERY",
+    "authorId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "publishedYear": 2016,
+    "isbn": "978-3-298953115",
+    "createdAt": "2025-04-20T09:59:07.546296Z",
+    "updatedAt": "2025-04-20T09:59:07.546296Z",
+    "deletedAt": null
+  },
+  {
+    "id": "656095cc-62ab-47bf-86e9-4f46cf3c0fc5",
+    "title": "Book 3",
+    "description": "Description for Book 3",
+    "genre": "SELF_HELP",
+    "authorId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "publishedYear": 1993,
+    "isbn": "978-3-772477618",
+    "createdAt": "2025-04-20T09:59:07.546296Z",
+    "updatedAt": "2025-04-20T09:59:07.546296Z",
+    "deletedAt": null
+  },
+  {
+    "id": "ed7eb8cb-420a-40ec-8a65-0550181b2c2a",
+    "title": "Book 4",
+    "description": "Description for Book 4",
+    "genre": "BIOGRAPHY",
+    "authorId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "publishedYear": 2001,
+    "isbn": "978-3-643147638",
+    "createdAt": "2025-04-20T09:59:07.546296Z",
+    "updatedAt": "2025-04-20T09:59:07.546296Z",
+    "deletedAt": null
+  },
+  {
+    "id": "4e9fd069-1bfb-4e24-9fd9-aced768561b3",
+    "title": "Book 5",
+    "description": "Description for Book 5",
+    "genre": "NON_FICTION",
+    "authorId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "publishedYear": 2010,
+    "isbn": "978-3-314229547",
+    "createdAt": "2025-04-20T09:59:07.546296Z",
+    "updatedAt": "2025-04-20T09:59:07.546296Z",
+    "deletedAt": null
+  }
+]

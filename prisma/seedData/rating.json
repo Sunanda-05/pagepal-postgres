@@ -1,0 +1,86 @@
+[
+  {
+    "id": "ca90f3d8-7f63-48fc-8984-1a6a97778f77",
+    "userId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "bookId": "f80fca49-6be8-4e98-b7e2-21dde8d958be",
+    "rating": 5,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  },
+  {
+    "id": "f6b38e65-9cec-4ffc-9eeb-29bb6a3d46b8",
+    "userId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "bookId": "4e9fd069-1bfb-4e24-9fd9-aced768561b3",
+    "rating": 1,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  },
+  {
+    "id": "d63514a0-ba6a-4c33-b096-8853283805ab",
+    "userId": "29100d85-28c7-47bd-a9c7-6a029251c1e0",
+    "bookId": "f80fca49-6be8-4e98-b7e2-21dde8d958be",
+    "rating": 5,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  },
+  {
+    "id": "4b95bbbd-1da7-4f3f-a884-7285f65ed9d8",
+    "userId": "29100d85-28c7-47bd-a9c7-6a029251c1e0",
+    "bookId": "f5a948a2-64c0-40fe-a6d4-d1b8061c8d07",
+    "rating": 1,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  },
+  {
+    "id": "b1ee68a8-b452-4caa-ac4d-f26c13a8cfa5",
+    "userId": "29100d85-28c7-47bd-a9c7-6a029251c1e0",
+    "bookId": "656095cc-62ab-47bf-86e9-4f46cf3c0fc5",
+    "rating": 2,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  },
+  {
+    "id": "768b0d36-e2d6-42c1-95e4-121ee6384902",
+    "userId": "29100d85-28c7-47bd-a9c7-6a029251c1e0",
+    "bookId": "ed7eb8cb-420a-40ec-8a65-0550181b2c2a",
+    "rating": 1,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  },
+  {
+    "id": "eff4fc46-b1a6-44e6-bbea-38caa6b58807",
+    "userId": "2064b2e3-1cee-4914-80b2-48207dbd1a4d",
+    "bookId": "f5a948a2-64c0-40fe-a6d4-d1b8061c8d07",
+    "rating": 4,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  },
+  {
+    "id": "8b22933c-5f5e-400c-b08b-317579519ae1",
+    "userId": "2064b2e3-1cee-4914-80b2-48207dbd1a4d",
+    "bookId": "ed7eb8cb-420a-40ec-8a65-0550181b2c2a",
+    "rating": 1,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  },
+  {
+    "id": "94ec1002-13df-4060-85bb-90c3cadebb4c",
+    "userId": "2064b2e3-1cee-4914-80b2-48207dbd1a4d",
+    "bookId": "4e9fd069-1bfb-4e24-9fd9-aced768561b3",
+    "rating": 1,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  },
+  {
+    "id": "5219b66e-9ad9-4564-b4cd-ec006f9630be",
+    "userId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "bookId": "f80fca49-6be8-4e98-b7e2-21dde8d958be",
+    "rating": 2,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  },
+  {
+    "id": "b9948230-dfc3-4102-b742-6f7643f11ce1",
+    "userId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "bookId": "656095cc-62ab-47bf-86e9-4f46cf3c0fc5",
+    "rating": 3,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  },
+  {
+    "id": "aedc4daf-1323-4670-9d0a-8e106d4c3d3d",
+    "userId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "bookId": "ed7eb8cb-420a-40ec-8a65-0550181b2c2a",
+    "rating": 3,
+    "createdAt": "2025-04-20T09:59:07.547296Z"
+  }
+]

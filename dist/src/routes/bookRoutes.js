@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authMiddleware_1 = __importDefault(require("../middlewares/authMiddleware"));
+const context_1 = require("../config/context");
+const asyncHandler_1 = require("../utils/asyncHandler");
+const bookController_1 = require("../controllers/bookController");
+const bookTagController_1 = require("../controllers/bookTagController");
+const ratingRoutes_1 = __importDefault(require("./ratingRoutes"));
+const reviewRoutes_1 = __importDefault(require("./reviewRoutes"));
+const router = (0, express_1.Router)({ mergeParams: true });
+router.get("/", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.getBooks);
+router.get("/filters", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.getFilteredBooks);
+router.get("/:id", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.getBookById);
+router.post("/", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.addBook);
+router.patch("/", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.updateBook);
+router.delete("/", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.deleteBook);
+router.post("/:id/tag", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookTagController_1.addBooktag);
+router.use("/:id/ratings", ratingRoutes_1.default);
+router.use("/:id/reviews", reviewRoutes_1.default);
+exports.default = router;

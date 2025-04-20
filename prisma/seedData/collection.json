@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ffba24da-3422-48c8-b306-5207ea3542aa",
+    "name": "User 1's Collection 1",
+    "userId": "7ce206ae-4452-49a9-8234-547d9e266291",
+    "description": "A book collection by User 1",
+    "isPublic": true,
+    "createdAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "bb695360-d2f3-44ed-8587-e44c6faff47e",
+    "name": "User 1's Collection 2",
+    "userId": "7ce206ae-4452-49a9-8234-547d9e266291",
+    "description": "A book collection by User 1",
+    "isPublic": true,
+    "createdAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "49b37786-c13a-4f7d-8667-005d0d3a8fa5",
+    "name": "User 2's Collection 1",
+    "userId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "description": "A book collection by User 2",
+    "isPublic": false,
+    "createdAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "007f12aa-d1e2-47c6-920b-da6367681cb7",
+    "name": "User 2's Collection 2",
+    "userId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "description": "A book collection by User 2",
+    "isPublic": false,
+    "createdAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "d990f84a-d158-4983-9589-4f600c7a8efb",
+    "name": "User 3's Collection 1",
+    "userId": "29100d85-28c7-47bd-a9c7-6a029251c1e0",
+    "description": "A book collection by User 3",
+    "isPublic": false,
+    "createdAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "13b2abce-1d1e-4e64-af13-257c35566d8b",
+    "name": "User 3's Collection 2",
+    "userId": "29100d85-28c7-47bd-a9c7-6a029251c1e0",
+    "description": "A book collection by User 3",
+    "isPublic": true,
+    "createdAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "dccbe183-7c0d-4b36-b594-6d943e89e59e",
+    "name": "User 4's Collection 1",
+    "userId": "2064b2e3-1cee-4914-80b2-48207dbd1a4d",
+    "description": "A book collection by User 4",
+    "isPublic": true,
+    "createdAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "a4419b8b-aa6c-43f3-b942-a5d0cf839bc2",
+    "name": "User 4's Collection 2",
+    "userId": "2064b2e3-1cee-4914-80b2-48207dbd1a4d",
+    "description": "A book collection by User 4",
+    "isPublic": true,
+    "createdAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "2d55da69-fa3b-4cf9-8d73-0a7811c7f298",
+    "name": "User 5's Collection 1",
+    "userId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "description": "A book collection by User 5",
+    "isPublic": false,
+    "createdAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "3ac1532a-1049-427b-aee8-b8d06576e9d5",
+    "name": "User 5's Collection 2",
+    "userId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "description": "A book collection by User 5",
+    "isPublic": true,
+    "createdAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  }
+]

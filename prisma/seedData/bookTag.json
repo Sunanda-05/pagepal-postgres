@@ -1,0 +1,47 @@
+[
+  {
+    "id": "76869421-b88e-47e4-b341-2dac1505fd7c",
+    "bookId": "f80fca49-6be8-4e98-b7e2-21dde8d958be",
+    "tagId": "d451b0d8-c163-418c-9cda-be00e7f94c74"
+  },
+  {
+    "id": "338de2c8-72c1-4a69-9af5-2bb7fc610a0c",
+    "bookId": "f80fca49-6be8-4e98-b7e2-21dde8d958be",
+    "tagId": "74360215-49a7-4248-9b09-8e475e869d4e"
+  },
+  {
+    "id": "66f33ba9-c8ea-454e-8b10-dc49c60e370d",
+    "bookId": "f5a948a2-64c0-40fe-a6d4-d1b8061c8d07",
+    "tagId": "d451b0d8-c163-418c-9cda-be00e7f94c74"
+  },
+  {
+    "id": "023d1282-93ed-4239-a7ca-d0b68a729e69",
+    "bookId": "656095cc-62ab-47bf-86e9-4f46cf3c0fc5",
+    "tagId": "d451b0d8-c163-418c-9cda-be00e7f94c74"
+  },
+  {
+    "id": "d02a03a6-2c55-42a8-8ccb-390ec35c4f93",
+    "bookId": "656095cc-62ab-47bf-86e9-4f46cf3c0fc5",
+    "tagId": "3c6a3a80-5940-4c1b-a53e-b564a2dcb7f1"
+  },
+  {
+    "id": "8314d37a-d329-45ca-b415-d00434dae084",
+    "bookId": "ed7eb8cb-420a-40ec-8a65-0550181b2c2a",
+    "tagId": "74360215-49a7-4248-9b09-8e475e869d4e"
+  },
+  {
+    "id": "9f60a4e8-dedf-46ef-a6ac-f662c835b74d",
+    "bookId": "ed7eb8cb-420a-40ec-8a65-0550181b2c2a",
+    "tagId": "d451b0d8-c163-418c-9cda-be00e7f94c74"
+  },
+  {
+    "id": "55cad16c-560f-4d7d-8958-3df8d7513efe",
+    "bookId": "ed7eb8cb-420a-40ec-8a65-0550181b2c2a",
+    "tagId": "3c6a3a80-5940-4c1b-a53e-b564a2dcb7f1"
+  },
+  {
+    "id": "03c3d686-fc41-4b83-a1b3-1506c0eb29b2",
+    "bookId": "4e9fd069-1bfb-4e24-9fd9-aced768561b3",
+    "tagId": "74360215-49a7-4248-9b09-8e475e869d4e"
+  }
+]

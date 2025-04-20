@@ -1,0 +1,13 @@
+[
+  {
+    "id": "23af76c5-20e6-4c7d-9176-28441059d519",
+    "userId": "7ce206ae-4452-49a9-8234-547d9e266291",
+    "status": "REJECTED",
+    "bio": "Application bio for User 1",
+    "createdAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z",
+    "reviewedById": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "reviewedAt": null,
+    "reason": null
+  }
+]

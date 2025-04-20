@@ -1,0 +1,200 @@
+[
+  {
+    "id": "ead8862a-a4e3-470f-98df-c0fd2985584b",
+    "collectionId": "ffba24da-3422-48c8-b306-5207ea3542aa",
+    "bookId": "ed7eb8cb-420a-40ec-8a65-0550181b2c2a",
+    "userId": "7ce206ae-4452-49a9-8234-547d9e266291",
+    "readingStatus": "TO_READ",
+    "addedAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "90da6fec-c896-469c-88e2-095ac788dd4a",
+    "collectionId": "ffba24da-3422-48c8-b306-5207ea3542aa",
+    "bookId": "f5a948a2-64c0-40fe-a6d4-d1b8061c8d07",
+    "userId": "7ce206ae-4452-49a9-8234-547d9e266291",
+    "readingStatus": "READING",
+    "addedAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "e6250aa2-a563-4699-99f3-99c375d945aa",
+    "collectionId": "ffba24da-3422-48c8-b306-5207ea3542aa",
+    "bookId": "656095cc-62ab-47bf-86e9-4f46cf3c0fc5",
+    "userId": "7ce206ae-4452-49a9-8234-547d9e266291",
+    "readingStatus": "TO_READ",
+    "addedAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "abd4670d-05c2-4718-92d0-6539f253dd15",
+    "collectionId": "bb695360-d2f3-44ed-8587-e44c6faff47e",
+    "bookId": "656095cc-62ab-47bf-86e9-4f46cf3c0fc5",
+    "userId": "7ce206ae-4452-49a9-8234-547d9e266291",
+    "readingStatus": "FINISHED",
+    "addedAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "468c3790-0b4f-42cf-9393-e171844f06df",
+    "collectionId": "bb695360-d2f3-44ed-8587-e44c6faff47e",
+    "bookId": "f80fca49-6be8-4e98-b7e2-21dde8d958be",
+    "userId": "7ce206ae-4452-49a9-8234-547d9e266291",
+    "readingStatus": "TO_READ",
+    "addedAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "22f691fc-b2f6-4386-a243-15f0e399f47b",
+    "collectionId": "bb695360-d2f3-44ed-8587-e44c6faff47e",
+    "bookId": "f5a948a2-64c0-40fe-a6d4-d1b8061c8d07",
+    "userId": "7ce206ae-4452-49a9-8234-547d9e266291",
+    "readingStatus": "TO_READ",
+    "addedAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "6c46378c-b01f-4b74-be3b-c9f7ac0204ce",
+    "collectionId": "49b37786-c13a-4f7d-8667-005d0d3a8fa5",
+    "bookId": "ed7eb8cb-420a-40ec-8a65-0550181b2c2a",
+    "userId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "readingStatus": "FINISHED",
+    "addedAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "3969d769-24fc-4931-81f3-a175b7ca62bd",
+    "collectionId": "49b37786-c13a-4f7d-8667-005d0d3a8fa5",
+    "bookId": "4e9fd069-1bfb-4e24-9fd9-aced768561b3",
+    "userId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "readingStatus": "READING",
+    "addedAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "a5b14cca-7fe0-440a-8f24-41aefce32729",
+    "collectionId": "49b37786-c13a-4f7d-8667-005d0d3a8fa5",
+    "bookId": "f5a948a2-64c0-40fe-a6d4-d1b8061c8d07",
+    "userId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "readingStatus": "FINISHED",
+    "addedAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "983bb257-9d76-446b-af90-285c40caefcc",
+    "collectionId": "007f12aa-d1e2-47c6-920b-da6367681cb7",
+    "bookId": "f80fca49-6be8-4e98-b7e2-21dde8d958be",
+    "userId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "readingStatus": "READING",
+    "addedAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "7d659847-57d1-44e5-95cb-e79f33857bad",
+    "collectionId": "007f12aa-d1e2-47c6-920b-da6367681cb7",
+    "bookId": "4e9fd069-1bfb-4e24-9fd9-aced768561b3",
+    "userId": "f484bb6a-127c-4a4d-a991-f5bdeed9ddcf",
+    "readingStatus": "FINISHED",
+    "addedAt": "2025-04-20T09:59:07.548296Z",
+    "updatedAt": "2025-04-20T09:59:07.548296Z"
+  },
+  {
+    "id": "ea1651d2-9331-4915-86f3-5889f0121efe",
+    "collectionId": "d990f84a-d158-4983-9589-4f600c7a8efb",
+    "bookId": "656095cc-62ab-47bf-86e9-4f46cf3c0fc5",
+    "userId": "29100d85-28c7-47bd-a9c7-6a029251c1e0",
+    "readingStatus": "READING",
+    "addedAt": "2025-04-20T09:59:07.549296Z",
+    "updatedAt": "2025-04-20T09:59:07.549296Z"
+  },
+  {
+    "id": "08579e79-2e47-4ba8-9a83-855a2e7291de",
+    "collectionId": "13b2abce-1d1e-4e64-af13-257c35566d8b",
+    "bookId": "f80fca49-6be8-4e98-b7e2-21dde8d958be",
+    "userId": "29100d85-28c7-47bd-a9c7-6a029251c1e0",
+    "readingStatus": "READING",
+    "addedAt": "2025-04-20T09:59:07.549296Z",
+    "updatedAt": "2025-04-20T09:59:07.549296Z"
+  },
+  {
+    "id": "608489bc-17d6-467a-a1e9-b13f332ea967",
+    "collectionId": "13b2abce-1d1e-4e64-af13-257c35566d8b",
+    "bookId": "4e9fd069-1bfb-4e24-9fd9-aced768561b3",
+    "userId": "29100d85-28c7-47bd-a9c7-6a029251c1e0",
+    "readingStatus": "FINISHED",
+    "addedAt": "2025-04-20T09:59:07.549296Z",
+    "updatedAt": "2025-04-20T09:59:07.549296Z"
+  },
+  {
+    "id": "d9035f41-2a50-46f8-b0d6-b7692cdc859f",
+    "collectionId": "13b2abce-1d1e-4e64-af13-257c35566d8b",
+    "bookId": "656095cc-62ab-47bf-86e9-4f46cf3c0fc5",
+    "userId": "29100d85-28c7-47bd-a9c7-6a029251c1e0",
+    "readingStatus": "READING",
+    "addedAt": "2025-04-20T09:59:07.549296Z",
+    "updatedAt": "2025-04-20T09:59:07.549296Z"
+  },
+  {
+    "id": "18da248f-3433-44b0-9a57-f6031e203565",
+    "collectionId": "dccbe183-7c0d-4b36-b594-6d943e89e59e",
+    "bookId": "ed7eb8cb-420a-40ec-8a65-0550181b2c2a",
+    "userId": "2064b2e3-1cee-4914-80b2-48207dbd1a4d",
+    "readingStatus": "TO_READ",
+    "addedAt": "2025-04-20T09:59:07.549296Z",
+    "updatedAt": "2025-04-20T09:59:07.549296Z"
+  },
+  {
+    "id": "6cd0d6d3-1e88-4fac-ac64-847072d64c30",
+    "collectionId": "a4419b8b-aa6c-43f3-b942-a5d0cf839bc2",
+    "bookId": "f5a948a2-64c0-40fe-a6d4-d1b8061c8d07",
+    "userId": "2064b2e3-1cee-4914-80b2-48207dbd1a4d",
+    "readingStatus": "READING",
+    "addedAt": "2025-04-20T09:59:07.549296Z",
+    "updatedAt": "2025-04-20T09:59:07.549296Z"
+  },
+  {
+    "id": "ca45ba58-09fc-4916-9d3e-df806b5e1b9d",
+    "collectionId": "a4419b8b-aa6c-43f3-b942-a5d0cf839bc2",
+    "bookId": "656095cc-62ab-47bf-86e9-4f46cf3c0fc5",
+    "userId": "2064b2e3-1cee-4914-80b2-48207dbd1a4d",
+    "readingStatus": "FINISHED",
+    "addedAt": "2025-04-20T09:59:07.549296Z",
+    "updatedAt": "2025-04-20T09:59:07.549296Z"
+  },
+  {
+    "id": "515a455c-ed66-4be8-9c70-062c1ec39992",
+    "collectionId": "2d55da69-fa3b-4cf9-8d73-0a7811c7f298",
+    "bookId": "ed7eb8cb-420a-40ec-8a65-0550181b2c2a",
+    "userId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "readingStatus": "READING",
+    "addedAt": "2025-04-20T09:59:07.549296Z",
+    "updatedAt": "2025-04-20T09:59:07.549296Z"
+  },
+  {
+    "id": "974d94ce-a5ec-499b-9b46-d001e0c94297",
+    "collectionId": "2d55da69-fa3b-4cf9-8d73-0a7811c7f298",
+    "bookId": "4e9fd069-1bfb-4e24-9fd9-aced768561b3",
+    "userId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "readingStatus": "TO_READ",
+    "addedAt": "2025-04-20T09:59:07.549296Z",
+    "updatedAt": "2025-04-20T09:59:07.549296Z"
+  },
+  {
+    "id": "8e8dd8c8-eaab-4ecd-8910-9fc01928ca2b",
+    "collectionId": "2d55da69-fa3b-4cf9-8d73-0a7811c7f298",
+    "bookId": "f80fca49-6be8-4e98-b7e2-21dde8d958be",
+    "userId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "readingStatus": "TO_READ",
+    "addedAt": "2025-04-20T09:59:07.549296Z",
+    "updatedAt": "2025-04-20T09:59:07.549296Z"
+  },
+  {
+    "id": "60933ce6-1b84-416a-9a63-8d8280765da7",
+    "collectionId": "3ac1532a-1049-427b-aee8-b8d06576e9d5",
+    "bookId": "4e9fd069-1bfb-4e24-9fd9-aced768561b3",
+    "userId": "1aec75b7-f7a1-40c6-b25a-ca7d4f67f826",
+    "readingStatus": "TO_READ",
+    "addedAt": "2025-04-20T09:59:07.549296Z",
+    "updatedAt": "2025-04-20T09:59:07.549296Z"
+  }
+]
