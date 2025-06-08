@@ -31,7 +31,7 @@ export const applyAsAuthor = async (
     if (!user) throw new ApiError(401, "Not a user");
     if (user?.role === "USER") throw new ApiError(401, "Not a user");
 
-    const bio = request.query.bio as string;
+    const bio = request.body.bio as string;
     const application = await applyAuthorService(user?.id, bio);
     response.status(201).json(application);
   } catch (error) {

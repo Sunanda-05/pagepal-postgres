@@ -1,0 +1,1163 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My API",
+        "version": "1.0.0",
+        "description": "PagePal is a robust **Node.js** API for book reviews and personalized recommendations, built with **Express**, **TypeScript**, and **PostgreSQL using Prisma ORM**. It demonstrates advanced backend patterns, including **role-based access control**, **audit logging**, and complex data modeling. \n\n Users can manage books, submit ratings and reviews, follow others, create collections, and receive algorithmic reading suggestions based on behavior and preferences. PagePal features a **secure JWT authentication** system (with **refresh-tokens**), efficient **pagination**, **soft deletes**, and transaction-safe operations. Designed as a production-ready API, this system showcases scalable and maintainable API architecture for modern web applications."
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Authentication and authorization endpoints"
+        },
+        {
+            "name": "User",
+            "description": "User management"
+        },
+        {
+            "name": "Tag",
+            "description": ""
+        },
+        {
+            "name": "Book",
+            "description": ""
+        },
+        {
+            "name": "Admin",
+            "description": ""
+        },
+        {
+            "name": "Author",
+            "description": ""
+        },
+        {
+            "name": "Collection",
+            "description": ""
+        },
+        {
+            "name": "Rating",
+            "description": ""
+        },
+        {
+            "name": "Review",
+            "description": ""
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "UserRegister": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                    "name": { "type": "string" },
+                    "email": { "type": "string", "format": "email" },
+                    "password": { "type": "string", "format": "password" }
+                }
+            },
+            "UserLogin": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                    "email": { "type": "string", "format": "email" },
+                    "password": { "type": "string", "format": "password" }
+                }
+            },
+            "AuthToken": {
+                "type": "object",
+                "required": ["accessToken"],
+                "properties": {
+                    "accessToken": { "type": "string" }
+                }
+            },
+            "BookInput": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "The Great Gatsby"
+                    },
+                    "genre": {
+                        "type": "string",
+                        "example": "Classic Fiction"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "A novel set in the Jazz Age that tells the story of Jay Gatsby and his unrequited love for Daisy Buchanan."
+                    },
+                    "isbn": {
+                        "type": "string",
+                        "example": "9780743273565"
+                    },
+                    "publishedYear": {
+                        "type": "integer",
+                        "example": 1925
+                    },
+                    "authorId": {
+                        "type": "string",
+                        "example": "clj93lzba0000klyjfy8qg3tz"
+                    }
+                },
+                "required": [
+                    "title",
+                    "genre",
+                    "description",
+                    "isbn",
+                    "publishedYear",
+                    "authorId"
+                ]
+            },
+            "UserProfile": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "clj93lzba0000klyjfy8qg3tz"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "user@example.com"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Jane Doe"
+                    },
+                    "bio": {
+                        "type": ["string", "null"],
+                        "example": "A passionate reader and writer."
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": ["USER", "ADMIN", "AUTHOR"],
+                        "example": "USER"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-20T10:30:00Z"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-06-05T18:15:00Z"
+                    }
+                },
+                "required": ["id", "email", "name", "role", "createdAt", "updatedAt"]
+            },
+            "Tag": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "uuid",
+                        "example": "clj93lzba0000klyjfy8qg3tz"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "fantasy"
+                    }
+                },
+                "required": ["id", "name"]
+            },
+            "Review": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "uuid",
+                        "example": "review123"
+                    },
+                    "bookId": {
+                        "type": "uuid",
+                        "example": "book123"
+                    },
+                    "userId": {
+                        "type": "uuid",
+                        "example": "user123"
+                    },
+                    "reviewText": {
+                        "type": "string",
+                        "example": "Loved the plot and characters!"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-01T12:00:00Z"
+                    }
+                },
+                "required": ["id", "bookId", "userId", "reviewText", "createdAt"]
+            },
+            "Rating": {
+                "type": "object",
+                "properties": {
+                    "bookId": { "type": "uuid", "example": "book123" },
+                    "userId": { "type": "uuid", "example": "user456" },
+                    "rating": { "type": "number", "example": 4 },
+                    "createdAt": { "type": "uuid", "format": "date-time" }
+                }
+            },
+            "Collection": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique identifier for the collection",
+                        "example": "abc123"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the collection",
+                        "example": "My Favorite Books"
+                    },
+                    "description": {
+                        "type": ["string", "null"],
+                        "description": "Optional description of the collection",
+                        "example": "Books I plan to read this year"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "description": "ID of the user who owns the collection",
+                        "example": "user_456"
+                    },
+                    "isPublic": {
+                        "type": "boolean",
+                        "description": "Whether the collection is publicly visible",
+                        "example": true
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date the collection was created",
+                        "example": "2025-01-01T12:00:00Z"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date the collection was last updated",
+                        "example": "2025-01-15T14:30:00Z"
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "userId",
+                    "isPublic",
+                    "createdAt",
+                    "updatedAt"
+                ]
+            }
+        },
+        "parameters": {
+            "GenreParam": {
+                "name": "genre",
+                "in": "query",
+                "description": "Filter books by genre",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "PageParam": {
+                "name": "page",
+                "in": "query",
+                "description": "Page number",
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "LimitParam": {
+                "name": "page",
+                "in": "query",
+                "description": "Limit number of Books per request",
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "SortByParam": {
+                "name": "sortBy",
+                "in": "query",
+                "description": "Field to sort the results by",
+                "schema": {
+                    "type": "string",
+                    "enum": ["title", "createdAt", "rating"]
+                }
+            },
+            "SortOrderParam": {
+                "name": "sortOrder",
+                "in": "query",
+                "description": "Sort order of results (ascending or descending)",
+                "schema": {
+                    "type": "string",
+                    "enum": ["asc", "desc"]
+                }
+            },
+            "SearchParam": {
+                "name": "search",
+                "in": "query",
+                "description": "Part of Title of Any Book",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "AuthorNameParam": {
+                "name": "authorName",
+                "in": "query",
+                "description": "",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "PublishYearParam": {
+                "name": "publishedYear",
+                "in": "query",
+                "description": "",
+                "schema": {
+                    "type": "integer"
+                }
+            }
+        },
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ]
+    },
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "summary": "Register a new user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRegister"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User registered successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "tags": ["Auth"],
+                "security": []
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "summary": "Login user and return access token",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful, returns JWT tokens",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthToken"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                },
+                "tags": ["Auth"],
+                "security": []
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "summary": "Logout user and invalidate refresh token",
+                "responses": {
+                    "204": {
+                        "description": "Logout successful, no content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "tags": ["Auth"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/refresh-token": {
+            "post": {
+                "summary": "Refresh access token using refresh token cookie",
+                "responses": {
+                    "200": {
+                        "description": "New access token issued",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthToken"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid or missing refresh token"
+                    }
+                },
+                "tags": ["Auth"]
+            }
+        },
+        "/users/me": {
+            "get": {
+                "summary": "Get current user profile",
+                "tags": ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Returns current user profile",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserProfile"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "patch": {
+                "summary": "Update current user profile",
+                "tags": ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": { "type": "string" },
+                                    "bio": { "type": "string" },
+                                    "avatarUrl": { "type": "string", "format": "uri" }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User profile updated successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input or missing userId"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "summary": "Get profile of another user by ID",
+                "tags": ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns user profile by ID"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/users/{id}/follow": {
+            "post": {
+                "summary": "Follow a user",
+                "tags": ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Followed user successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/users/{id}/unfollow": {
+            "delete": {
+                "summary": "Unfollow a user",
+                "tags": ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Unfollowed user successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/users/recommendations": {
+            "get": {
+                "summary": "Get recommended users to follow",
+                "tags": ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Returns a list of user recommendations"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/tags": {
+            "get": {
+                "summary": "Get all tags",
+                "tags": ["Tag"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "List of all tags",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/Tag" }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new tag (Authors only)",
+                "tags": ["Tag"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["name"],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Science Fiction"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tag created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Tag" }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input or missing User ID"
+                    },
+                    "401": {
+                        "description": "Unauthorized or not an Author"
+                    }
+                }
+            }
+        },
+        "/tags/{id}/books": {
+            "get": {
+                "summary": "Get books by tag ID",
+                "tags": ["Tag"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" },
+                        "description": "Tag ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of books associated with the tag",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/Book" }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "No Tag ID provided"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/books/{id}/reviews": {
+            "get": {
+                "summary": "Get all reviews for a book",
+                "tags": ["Review"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" },
+                        "description": "Book ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of reviews",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/Review" }
+                                }
+                            }
+                        }
+                    },
+                    "400": { "description": "No Book ID provided" },
+                    "401": { "description": "Unauthorized" }
+                }
+            },
+            "post": {
+                "summary": "Create a review for a book",
+                "tags": ["Review"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" },
+                        "description": "Book ID"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["review"],
+                                "properties": {
+                                    "review": {
+                                        "type": "string",
+                                        "example": "Amazing book! Loved the characters."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Review created",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Review" }
+                            }
+                        }
+                    },
+                    "400": { "description": "Missing User ID, Book ID or Review text" },
+                    "401": { "description": "Unauthorized" }
+                }
+            }
+        },
+        "/book/{id}/reviews/{reviewId}": {
+            "patch": {
+                "summary": "Update a review by ID",
+                "tags": ["Review"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "reviewId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" },
+                        "description": "Review ID"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "review": {
+                                        "type": "string",
+                                        "example": "Updated review text"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Review updated",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Review" }
+                            }
+                        }
+                    },
+                    "400": { "description": "Missing Review ID or User ID" },
+                    "401": { "description": "Unauthorized" }
+                }
+            },
+            "delete": {
+                "summary": "Delete a review by ID",
+                "tags": ["Review"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "reviewId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" },
+                        "description": "Review ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Review deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Review" }
+                            }
+                        }
+                    },
+                    "400": { "description": "Missing Review ID or User ID" },
+                    "401": { "description": "Unauthorized" }
+                }
+            }
+        },
+        "/books/{id}/ratings": {
+            "get": {
+                "summary": "Get ratings for a book",
+                "tags": ["Rating"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" },
+                        "description": "Book ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book ratings",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "averageRating": { "type": "number", "example": 4.5 },
+                                        "ratingsCount": { "type": "integer", "example": 123 }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": { "description": "No Book ID provided" },
+                    "401": { "description": "Unauthorized" }
+                }
+            },
+            "post": {
+                "summary": "Rate a book",
+                "tags": ["Rating"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" },
+                        "description": "Book ID"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["rating"],
+                                "properties": {
+                                    "rating": {
+                                        "type": "number",
+                                        "minimum": 1,
+                                        "maximum": 5,
+                                        "example": 4
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Rating created/updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Rating"
+                                }
+                            }
+                        }
+                    },
+                    "400": { "description": "Missing User ID or Book ID" },
+                    "401": { "description": "Unauthorized" }
+                }
+            }
+        },
+        "/collections/public": {
+            "get": {
+                "summary": "Get all public collections",
+                "tags": ["Collection"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "List of public collections",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/Collection" }
+                                }
+                            }
+                        }
+                    },
+                    "401": { "description": "Unauthorized" }
+                }
+            }
+        },
+        "/collections/me": {
+            "get": {
+                "summary": "Get collections of the current user",
+                "tags": ["Collection"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "List of user's collections",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/Collection" }
+                                }
+                            }
+                        }
+                    },
+                    "401": { "description": "Unauthorized" }
+                }
+            }
+        },
+        "/collections/{id}": {
+            "get": {
+                "summary": "Get a specific collection by ID",
+                "tags": ["Collection"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" },
+                        "description": "Collection ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collection data",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Collection" }
+                            }
+                        }
+                    },
+                    "400": { "description": "Missing or invalid ID" },
+                    "401": { "description": "Unauthorized" }
+                }
+            },
+            "patch": {
+                "summary": "Update a collection",
+                "tags": ["Collection"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": { "type": "string" },
+                                    "description": { "type": "string" },
+                                    "isPublic": { "type": "boolean" }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": { "description": "Collection updated" },
+                    "400": { "description": "Invalid request" },
+                    "401": { "description": "Unauthorized" }
+                }
+            },
+            "delete": {
+                "summary": "Delete a collection (Authors only)",
+                "tags": ["Collection"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": {
+                    "200": { "description": "Collection deleted" },
+                    "400": { "description": "Missing or invalid ID" },
+                    "401": { "description": "Unauthorized or not an Author" }
+                }
+            },
+            "post": {
+                "summary": "Add a book to a collection",
+                "tags": ["Collection"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" },
+                        "description": "Collection ID"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["bookId", "readingStatus"],
+                                "properties": {
+                                    "bookId": { "type": "string", "example": "book123" },
+                                    "readingStatus": {
+                                        "type": "string",
+                                        "example": "READING"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book added to collection",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": { "description": "Missing parameters" },
+                    "401": { "description": "Unauthorized" }
+                }
+            }
+        },
+        "/collections": {
+            "post": {
+                "summary": "Create a new collection",
+                "tags": ["Collection"],
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["title", "description"],
+                                "properties": {
+                                    "title": { "type": "string", "example": "My Favorites" },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Books I love"
+                                    },
+                                    "isPublic": { "type": "boolean", "example": true }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Collection created",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Collection" }
+                            }
+                        }
+                    },
+                    "400": { "description": "Missing required fields" },
+                    "401": { "description": "Unauthorized" }
+                }
+            }
+        },
+        "/collections/{id}/books/{bookId}": {
+            "delete": {
+                "summary": "Remove a book from a collection",
+                "tags": ["Collection"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    },
+                    {
+                        "name": "bookId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": {
+                    "200": { "description": "Book removed from collection" },
+                    "400": { "description": "Missing parameters" },
+                    "401": { "description": "Unauthorized" }
+                }
+            }
+        },
+        "/collections/{id}/share": {
+            "post": {
+                "summary": "Share a collection",
+                "tags": ["Collection"],
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Collection shared successfully"
+                    },
+                    "400": { "description": "Missing Collection ID" },
+                    "401": { "description": "Unauthorized" }
+                }
+            }
+        },
+        "/collections/shared": {
+            "get": {
+                "summary": "Get collections shared with the current user",
+                "tags": ["Collection"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Collections shared with the user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/Collection" }
+                                }
+                            }
+                        }
+                    },
+                    "401": { "description": "Unauthorized" }
+                }
+            }
+        }
+    }
+}

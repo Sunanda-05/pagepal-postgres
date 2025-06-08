@@ -36,7 +36,7 @@ const applyAsAuthor = (request, response, next) => __awaiter(void 0, void 0, voi
             throw new ApiError_1.default(401, "Not a user");
         if ((user === null || user === void 0 ? void 0 : user.role) === "USER")
             throw new ApiError_1.default(401, "Not a user");
-        const bio = request.query.bio;
+        const bio = request.body.bio;
         const application = yield (0, authorApplicationService_1.applyAuthorService)(user === null || user === void 0 ? void 0 : user.id, bio);
         response.status(201).json(application);
     }

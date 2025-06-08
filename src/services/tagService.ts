@@ -1,4 +1,6 @@
 import prisma from "../utils/db";
+import { Prisma } from "../../generated";
+import ApiError from "../../src/utils/ApiError";
 
 const getAllTagsService = async () => {
   try {
@@ -42,13 +44,20 @@ const addTagService = async (tagname: string) => {
   try {
     const newTag = await prisma.tag.create({
       data: {
-        name: tagname,
+        name: tagname.toLowerCase(),
       },
     });
 
     return newTag;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002" &&
+      (error.meta?.target as string[])?.includes("name")
+    ) {
+      throw new ApiError(409, "Tag already exists");
+    }
     throw new Error("Error adding tag");
   }
 };

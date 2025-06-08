@@ -24,7 +24,8 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "prisma": "^6.6.0"
+    "prisma": "^6.6.0",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.8",
@@ -33,6 +34,7 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.14.1",
+    "@types/swagger-ui-express": "^4.1.8",
     "concurrently": "^9.1.2",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
