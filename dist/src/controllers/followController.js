@@ -9,9 +9,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.unfollowUser = exports.followUser = exports.getFollowings = exports.getFollowers = void 0;
-const followServices_1 = require("../services/followServices");
-const getFollowers = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+exports.unfollowUser = exports.followUser = exports.getUserFollowings = exports.getUserFollowers = void 0;
+const authorFollowServices_1 = require("../services/authorFollowServices");
+const userFollowServices_1 = require("../services/userFollowServices");
+const getUserFollowers = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        const userId = (_a = request === null || request === void 0 ? void 0 : request.params) === null || _a === void 0 ? void 0 : _a.id;
+        const { type } = request.query;
+        if (!userId) {
+            response.status(400).json({ error: "No UserId provided." });
+            return;
+        }
+        if (type === "user") {
+            const result = yield (0, userFollowServices_1.getUserFollowersService)(userId);
+            response.status(200).json(result);
+        }
+        else if (type === "author") {
+            const result = yield (0, authorFollowServices_1.getAuthorFollowersService)(userId);
+            response.status(200).json(result);
+        }
+        else {
+            response.status(400).json({ message: "Invalid follow type" });
+        }
+    }
+    catch (error) {
+        console.error("Error in Register User:", error);
+        response.status(500).json({ error: "Internal server error." });
+    }
+});
+exports.getUserFollowers = getUserFollowers;
+const getUserFollowings = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         const userId = (_a = request === null || request === void 0 ? void 0 : request.params) === null || _a === void 0 ? void 0 : _a.id;
@@ -19,7 +47,7 @@ const getFollowers = (request, response) => __awaiter(void 0, void 0, void 0, fu
             response.status(400).json({ error: "No UserId provided." });
             return;
         }
-        const followers = yield (0, followServices_1.getFollowersByIdService)(userId);
+        const followers = yield (0, userFollowServices_1.getUserFollowingService)(userId);
         response.status(200).json(followers);
     }
     catch (error) {
@@ -27,35 +55,28 @@ const getFollowers = (request, response) => __awaiter(void 0, void 0, void 0, fu
         response.status(500).json({ error: "Internal server error." });
     }
 });
-exports.getFollowers = getFollowers;
-const getFollowings = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    try {
-        const userId = (_a = request === null || request === void 0 ? void 0 : request.params) === null || _a === void 0 ? void 0 : _a.id;
-        if (!userId) {
-            response.status(400).json({ error: "No UserId provided." });
-            return;
-        }
-        const followers = yield (0, followServices_1.getFollowingByIdService)(userId);
-        response.status(200).json(followers);
-    }
-    catch (error) {
-        console.error("Error in Register User:", error);
-        response.status(500).json({ error: "Internal server error." });
-    }
-});
-exports.getFollowings = getFollowings;
+exports.getUserFollowings = getUserFollowings;
 const followUser = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     try {
         const userId = (_a = request === null || request === void 0 ? void 0 : request.user) === null || _a === void 0 ? void 0 : _a.id;
         const followingId = (_b = request === null || request === void 0 ? void 0 : request.params) === null || _b === void 0 ? void 0 : _b.id;
+        const { type } = request === null || request === void 0 ? void 0 : request.query;
         if (!userId) {
             response.status(400).json({ error: "No UserId provided." });
             return;
         }
-        const follow = yield (0, followServices_1.followUserService)(userId, followingId);
-        response.status(201).json(follow);
+        if (type === "user") {
+            const result = yield (0, userFollowServices_1.followUserService)(userId, followingId);
+            response.status(200).json(result);
+        }
+        else if (type === "author") {
+            const result = yield (0, authorFollowServices_1.followAuthorService)(userId, followingId);
+            response.status(200).json(result);
+        }
+        else {
+            response.status(400).json({ message: "Invalid follow type" });
+        }
     }
     catch (error) {
         console.error("Error in Register User:", error);
@@ -68,12 +89,22 @@ const unfollowUser = (request, response) => __awaiter(void 0, void 0, void 0, fu
     try {
         const userId = (_a = request === null || request === void 0 ? void 0 : request.user) === null || _a === void 0 ? void 0 : _a.id;
         const followingId = (_b = request === null || request === void 0 ? void 0 : request.params) === null || _b === void 0 ? void 0 : _b.id;
+        const { type } = request.query;
         if (!userId) {
             response.status(400).json({ error: "No UserId provided." });
             return;
         }
-        const follow = yield (0, followServices_1.unfollowUserService)(userId, followingId);
-        response.status(200).json(follow);
+        if (type === "user") {
+            const result = yield (0, userFollowServices_1.unfollowUserService)(userId, followingId);
+            response.status(200).json(result);
+        }
+        else if (type === "author") {
+            const result = yield (0, authorFollowServices_1.unfollowAuthorService)(userId, followingId);
+            response.status(200).json(result);
+        }
+        else {
+            response.status(400).json({ message: "Invalid follow type" });
+        }
     }
     catch (error) {
         console.error("Error in Register User:", error);

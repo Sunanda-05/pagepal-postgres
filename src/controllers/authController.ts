@@ -53,7 +53,11 @@ export const loginUser = async (
 
     response.status(200).json({
       message: "Login successful!",
-      email,
+      user: {
+        email,
+        username: user.username,
+        role: user.role,
+      },
       accessToken,
     });
   } catch (error) {
@@ -123,9 +127,9 @@ export const registerUser = async (
   response: Response
 ): Promise<void> => {
   try {
-    const { email, password, name } = request.body;
-    if (!email || !password) {
-      response.status(400).json({ error: "Email & Password are required." });
+    const { email, password, name, username } = request.body;
+    if (!email || !password || !username) {
+      response.status(400).json({ error: "Email, Username & Password are required." });
       return;
     }
 
@@ -136,7 +140,7 @@ export const registerUser = async (
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const userData = { email, passwordHash, name };
+    const userData = { email, passwordHash, name, username };
     const user = await createUser(userData);
 
     response.status(201).json(user);

@@ -1,34 +1,53 @@
 import { Request, Response } from "express";
 import {
+  followAuthorService,
+  getAuthorFollowersService,
+  unfollowAuthorService,
+} from "../services/authorFollowServices";
+import {
   followUserService,
-  getFollowersByIdService,
-  getFollowingByIdService,
-  unfollowUserService
-} from "../services/followServices";
+  getUserFollowersService,
+  getUserFollowingService,
+  unfollowUserService,
+} from "../services/userFollowServices";
 
-export const getFollowers = async (request: Request, response: Response) => {
+export const getUserFollowers = async (
+  request: Request,
+  response: Response
+) => {
   try {
     const userId = request?.params?.id;
+    const { type } = request.query;
     if (!userId) {
       response.status(400).json({ error: "No UserId provided." });
       return;
     }
-    const followers = await getFollowersByIdService(userId);
-    response.status(200).json(followers);
+    if (type === "user") {
+      const result = await getUserFollowersService(userId);
+      response.status(200).json(result);
+    } else if (type === "author") {
+      const result = await getAuthorFollowersService(userId);
+      response.status(200).json(result);
+    } else {
+      response.status(400).json({ message: "Invalid follow type" });
+    }
   } catch (error) {
     console.error("Error in Register User:", error);
     response.status(500).json({ error: "Internal server error." });
   }
 };
 
-export const getFollowings = async (request: Request, response: Response) => {
+export const getUserFollowings = async (
+  request: Request,
+  response: Response
+) => {
   try {
     const userId = request?.params?.id;
     if (!userId) {
       response.status(400).json({ error: "No UserId provided." });
       return;
     }
-    const followers = await getFollowingByIdService(userId);
+    const followers = await getUserFollowingService(userId);
     response.status(200).json(followers);
   } catch (error) {
     console.error("Error in Register User:", error);
@@ -40,30 +59,47 @@ export const followUser = async (request: Request, response: Response) => {
   try {
     const userId = request?.user?.id;
     const followingId = request?.params?.id;
+    const { type } = request?.query;
     if (!userId) {
       response.status(400).json({ error: "No UserId provided." });
       return;
     }
-    const follow = await followUserService(userId, followingId);
-    response.status(201).json(follow);
+    if (type === "user") {
+      const result = await followUserService(userId, followingId);
+      response.status(200).json(result);
+    } else if (type === "author") {
+      const result = await followAuthorService(userId, followingId);
+      response.status(200).json(result);
+    } else {
+      response.status(400).json({ message: "Invalid follow type" });
+    }
   } catch (error) {
     console.error("Error in Register User:", error);
     response.status(500).json({ error: "Internal server error." });
   }
-}
+};
 
 export const unfollowUser = async (request: Request, response: Response) => {
   try {
     const userId = request?.user?.id;
     const followingId = request?.params?.id;
+    const { type } = request.query;
     if (!userId) {
       response.status(400).json({ error: "No UserId provided." });
       return;
     }
-    const follow = await unfollowUserService(userId, followingId);
-    response.status(200).json(follow);
+
+    if (type === "user") {
+      const result = await unfollowUserService(userId, followingId);
+      response.status(200).json(result);
+    } else if (type === "author") {
+      const result = await unfollowAuthorService(userId, followingId);
+      response.status(200).json(result);
+    } else {
+      response.status(400).json({ message: "Invalid follow type" });
+    }
   } catch (error) {
     console.error("Error in Register User:", error);
     response.status(500).json({ error: "Internal server error." });
   }
-}
+};

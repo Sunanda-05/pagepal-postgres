@@ -32,7 +32,7 @@ app.use(helmetConfig);
 app.use(rateLimitHandler);
 // app.use(csrfMiddleware);
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJson));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJson));
 
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
@@ -41,7 +41,6 @@ app.use("/collection", collectionRoutes);
 app.use("/tag", tagRoutes);
 app.use("/admin", adminApplicationRoutes);
 app.use("/author", authorApplicationRoutes);
-
 
 app.use(errorHandler);
 const port = process.env.PORT || 5001;

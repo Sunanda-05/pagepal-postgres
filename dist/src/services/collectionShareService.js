@@ -78,7 +78,6 @@ const getSharedCollectionsService = (userId) => __awaiter(void 0, void 0, void 0
                                 author: {
                                     select: {
                                         id: true,
-                                        email: true,
                                         name: true,
                                     },
                                 },

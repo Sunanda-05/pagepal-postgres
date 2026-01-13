@@ -33,7 +33,6 @@ const getAllBooksService = (query) => __awaiter(void 0, void 0, void 0, function
                     select: {
                         id: true,
                         name: true,
-                        email: true,
                     },
                 },
                 ratings: {
@@ -86,7 +85,6 @@ const getFilteredBooksService = (query) => __awaiter(void 0, void 0, void 0, fun
                     select: {
                         id: true,
                         name: true,
-                        email: true,
                     },
                 },
                 ratings: {
@@ -116,8 +114,7 @@ const getBookByIdService = (id) => __awaiter(void 0, void 0, void 0, function* (
             author: {
                 select: {
                     id: true,
-                    name: true,
-                    email: true,
+                    name: true
                 },
             },
             ratings: true,

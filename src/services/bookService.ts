@@ -28,7 +28,6 @@ const getAllBooksService = async (query: Query) => {
           select: {
             id: true,
             name: true,
-            email: true,
           },
         },
         ratings: {
@@ -95,7 +94,6 @@ const getFilteredBooksService = async (query: FilterQuery) => {
           select: {
             id: true,
             name: true,
-            email: true,
           },
         },
         ratings: {
@@ -126,8 +124,7 @@ const getBookByIdService = async (id: string) => {
       author: {
         select: {
           id: true,
-          name: true,
-          email: true,
+          name: true
         },
       },
       ratings: true,

@@ -29,7 +29,6 @@ const getAllPublicCollectionsService = async () => {
                 author: {
                   select: {
                     id: true,
-                    email: true,
                     name: true,
                   },
                 },
@@ -62,7 +61,6 @@ const getMyCollectionsService = async (userId: string) => {
                 author: {
                   select: {
                     id: true,
-                    email: true,
                     name: true,
                   },
                 },
@@ -111,7 +109,6 @@ const getCollectionByIdService = async (
                 author: {
                   select: {
                     id: true,
-                    email: true,
                     name: true,
                   },
                 },

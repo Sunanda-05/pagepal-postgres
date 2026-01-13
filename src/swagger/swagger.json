@@ -166,6 +166,25 @@
         },
         "required": ["id", "name"]
       },
+      "Genre": {
+        "type": "string",
+        "enum": [
+          "FICTION",
+          "NON_FICTION",
+          "SCIENCE_FICTION",
+          "FANTASY",
+          "MYSTERY",
+          "THRILLER",
+          "ROMANCE",
+          "BIOGRAPHY",
+          "HISTORY",
+          "POETRY",
+          "SELF_HELP",
+          "CHILDREN",
+          "CLASSICS",
+          "OTHER"
+        ]
+      },
       "Review": {
         "type": "object",
         "properties": {
@@ -248,6 +267,65 @@
           "name",
           "userId",
           "isPublic",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "Book": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the book",
+            "example": "abc123"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the book",
+            "example": "Harry Potter & The Philosopher's Stone"
+          },
+          "description": {
+            "type": ["string", "null"],
+            "description": "Optional description of the book",
+            "example": "Books I plan to read this year"
+          },
+          "authorId": {
+            "type": "string",
+            "description": "ID of the user who owns the collection",
+            "example": "user_456"
+          },
+          "isbn": {
+            "type": "string",
+            "description": "ISBN number of the book"
+          },
+          "publishedYear": {
+            "type": "number",
+            "description": "The year the book got published",
+            "example": 2005
+          },
+          "genre": {
+            "$ref": "#/components/schemas/Genre"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date the collection was created",
+            "example": "2025-01-01T12:00:00Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date the collection was last updated",
+            "example": "2025-01-15T14:30:00Z"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "authorId",
+          "isbn",
+          "genre",
+          "publishedYear",
           "createdAt",
           "updatedAt"
         ]
@@ -1155,6 +1233,196 @@
               }
             }
           },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/books": {
+      "get": {
+        "summary": "Get all books",
+        "tags": ["Book"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "$ref": "#/components/parameters/SortByParam" },
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" },
+          { "$ref": "#/components/parameters/SortOrderParam" }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of books",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Book" }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" }
+        }
+      },
+      "post": {
+        "summary": "Add a new book",
+        "tags": ["Book"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/BookInput" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Book created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Book" }
+              }
+            }
+          },
+          "400": { "description": "Invalid input" },
+          "401": { "description": "Unauthorized" }
+        }
+      },
+      "patch": {
+        "summary": "Update a book",
+        "tags": ["Book"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/BookUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Book updated" },
+          "400": { "description": "Invalid update" },
+          "401": { "description": "Unauthorized" }
+        }
+      },
+      "delete": {
+        "summary": "Delete a book",
+        "tags": ["Book"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string", "example": "book-id-123" }
+                },
+                "required": ["id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Book deleted" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/books/filters": {
+      "get": {
+        "summary": "Get filtered books",
+        "tags": ["Book"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "genre",
+            "schema": { "type": "string" }
+          },
+          {
+            "in": "query",
+            "name": "author",
+            "schema": { "type": "string" }
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered books list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Book" }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "summary": "Get book by ID",
+        "tags": ["Book"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Book" }
+              }
+            }
+          },
+          "404": { "description": "Book not found" },
+          "401": { "description": "Unauthorized" }
+        }
+      },
+      "post": {
+        "summary": "Add tag to a book",
+        "tags": ["Book"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["tag"],
+                "properties": {
+                  "tag": { "type": "string", "example": "fiction" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Tag added to book" },
+          "400": { "description": "Invalid tag" },
           "401": { "description": "Unauthorized" }
         }
       }

@@ -31,7 +31,7 @@ dotenv_1.default.config();
 app.use(helmentConfig_1.default);
 app.use(rateLimitHandler_1.default);
 // app.use(csrfMiddleware);
-app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
+app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_json_1.default));
 app.use("/auth", authRoutes_1.default);
 app.use("/user", userRoutes_1.default);
 app.use("/books", bookRoutes_1.default);

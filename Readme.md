@@ -1,4 +1,4 @@
-# 📚 PAGE_PAL: Book Review and Recommendation System
+# PAGE_PAL: Book Review and Recommendation System
 
 A Node.js backend API demonstrating advanced Prisma ORM patterns with PostgreSQL database integration.
 
@@ -9,31 +9,31 @@ A Node.js backend API demonstrating advanced Prisma ORM patterns with PostgreSQL
 
 PagePal is a book review and recommendation API that showcases advanced database modeling and ORM techniques. This project serves as a reference implementation for how to effectively use Prisma ORM with PostgreSQL in a Node.js environment.
 
-## ✨ Features
+## Features
 
 ### User Management
 
-- **🔐 Authentication**: Secure JWT-based user sessions
-- **👑 Role-Based Access Control**: Tiered permissions with USER, AUTHOR, and ADMIN roles
-- **📝 Audit Logging**: Comprehensive activity tracking for all user actions
+- **Authentication**: Secure JWT-based user sessions
+- **Role-Based Access Control**: Tiered permissions with USER, AUTHOR, and ADMIN roles
+- **Audit Logging**: Comprehensive activity tracking for all user actions
 
 ### Book Management
 
-- **📖 Book Catalog**: Complete CRUD operations for books including metadata (title, description, genre, author, published year, ISBN)
-- **🏷️ Classification**: Multi-faceted organization with genres and tags
-- **⭐ Ratings & Reviews**: Users can rate books (1-5 stars) and write detailed reviews
+- **Book Catalog**: Complete CRUD operations for books including metadata (title, description, genre, author, published year, ISBN)
+- **Classification**: Multi-faceted organization with genres and tags
+- **Ratings & Reviews**: Users can rate books (1-5 stars) and write detailed reviews
 
 ### Author Platform
 
-- **✍️ Author Application Process**: Users can apply to become recognized authors
-- **👨‍💼 Admin Moderation**: Application review and approval workflow
+- **Author Application Process**: Users can apply to become recognized authors
+- **Admin Moderation**: Application review and approval workflow
 
 ### Community Features
 
-- **📚 Collections**: Create and manage personal book collections
-- **🤝 Sharing**: Collaborate on collections with other users
-- **👥 Follow System**: Stay updated on other users' reading activities
-- **⚡ Rate Limiting & Pagination**: Performance optimizations for large datasets
+- **Collections**: Create and manage personal book collections
+- **Sharing**: Collaborate on collections with other users
+- **Follow System**: Stay updated on other users' reading activities
+- **Rate Limiting & Pagination**: Performance optimizations for large datasets
 
 ### Recommendation Engine
 
@@ -87,9 +87,9 @@ This creates a personalized book discovery experience without the complexity of 
 - Efficient relation loading with Prisma's include patterns
 - Query performance monitoring and optimization
 
-## 🛠️ Technology Stack
+## Technology Stack
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -142,19 +142,19 @@ This creates a personalized book discovery experience without the complexity of 
 7. **Access the application**
    Open your browser to `http://localhost:5000`
 
-## 📈 Future Roadmap
+## Future Roadmap
 
-- **🔍 Advanced Search**: Full-text search capabilities across all book content
-- **🤖 ML-powered Recommendations**: Integration of machine learning models for more sophisticated book suggestions
-- **📊 Analytics Dashboard**: Insights into reading trends and user engagement
-- **🌐 Social Features**: Enhanced community interactions and book discussions
-- **📱 Mobile Applications**: Native iOS and Android clients
+- **Advanced Search**: Full-text search capabilities across all book content
+- **ML-powered Recommendations**: Integration of machine learning models for more sophisticated book suggestions
+- **Analytics Dashboard**: Insights into reading trends and user engagement
+- **Social Features**: Enhanced community interactions and book discussions
+- **Mobile Applications**: Native iOS and Android clients
 
 ## License
 
 This project is licensed under the ISC License
 
-## 👥 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 

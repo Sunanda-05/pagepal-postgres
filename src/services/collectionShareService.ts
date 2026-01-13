@@ -69,7 +69,6 @@ const getSharedCollectionsService = async (userId: string) => {
                 author: {
                   select: {
                     id: true,
-                    email: true,
                     name: true,
                   },
                 },

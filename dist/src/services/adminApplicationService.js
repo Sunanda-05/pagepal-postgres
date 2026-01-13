@@ -47,9 +47,12 @@ const reviewApplyService = (id, adminId, status, reason) => __awaiter(void 0, vo
                 },
             });
             if (status === "APPROVED") {
-                yield tx.user.update({
+                const appliedUser = yield tx.user.update({
                     where: { id: application.userId },
                     data: { role: generated_1.Role.AUTHOR },
+                });
+                yield tx.author.create({
+                    data: { userId: application.userId, name: appliedUser.id },
                 });
             }
             return application;

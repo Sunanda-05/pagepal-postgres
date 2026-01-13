@@ -46,6 +46,7 @@ enum Genre {
 model User {
   id           String   @id @default(uuid()) @db.Uuid
   email        String   @unique
+  username     String   @unique
   passwordHash String
   name         String
   bio          String?
@@ -53,37 +54,55 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  ratings             Rating[]
-  reviews             Review[]
-  authoredBooks       Book[]              @relation("BookAuthor")
-  authorApplication   AuthorApplication?  @relation("AuthorApplication")
-  reviewedApplication AuthorApplication[] @relation("ReviewedByAdmin")
+  author Author? @relation("UserAuthor")
 
   following Follow[] @relation("UserFollowing")
   followers Follow[] @relation("UserFollowers")
 
+  ratings           Rating[]
+  reviews           Review[]
   ownedCollections  Collection[]
   collectionEntries CollectionBook[]
   sharedWith        SharedCollectionAccess[]
+  refreshTokens     RefreshToken[]
+  auditLogs         AuditLog[]
 
-  refreshTokens RefreshToken[]
-  auditLogs     AuditLog[]
+  authorApplication   AuthorApplication?  @relation("AuthorApplication")
+  reviewedApplication AuthorApplication[] @relation("ReviewedByAdmin")
+
+  AuthorFollow AuthorFollow[]
 
   @@index([role])
   @@index([id, role])
 }
 
+model Author {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String?  @unique @db.Uuid
+  name      String
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User? @relation("UserAuthor", fields: [userId], references: [id])
+
+  books           Book[]         @relation("BookAuthor")
+  authorFollowers AuthorFollow[] @relation("AuthorFollowers")
+
+  @@index([userId])
+}
+
 model Book {
-  id            String   @id @default(uuid()) @db.Uuid
+  id            String    @id @default(uuid()) @db.Uuid
   title         String
   description   String
   genre         Genre
-  authorId      String   @db.Uuid
-  author        User     @relation("BookAuthor", fields: [authorId], references: [id])
+  authorId      String    @db.Uuid
+  author        Author    @relation("BookAuthor", fields: [authorId], references: [id])
   publishedYear Int
-  isbn          String   @unique
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  isbn          String    @unique
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   deletedAt     DateTime?
 
   ratings Rating[]
@@ -122,6 +141,20 @@ model Review {
   book Book @relation(fields: [bookId], references: [id])
 
   @@unique([userId, bookId]) // One review per user per book
+}
+
+model AuthorFollow {
+  id         String   @id @default(uuid()) @db.Uuid
+  followerId String   @db.Uuid // The User who is following
+  authorId   String   @db.Uuid // The Author who is being followed
+  createdAt  DateTime @default(now())
+
+  follower User   @relation(fields: [followerId], references: [id])
+  author   Author @relation("AuthorFollowers", fields: [authorId], references: [id])
+
+  @@unique([followerId, authorId])
+  @@index([followerId])
+  @@index([authorId])
 }
 
 model Follow {

@@ -5,6 +5,7 @@ export interface AuthTokenPayload {
 }
 
 export interface UserData {
+  username: string;
   email: string;
   passwordHash: string;
   name: string;

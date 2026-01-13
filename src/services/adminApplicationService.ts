@@ -38,9 +38,13 @@ const reviewApplyService = async (
       });
 
       if (status === "APPROVED") {
-        await tx.user.update({
+        const appliedUser = await tx.user.update({
           where: { id: application.userId },
           data: { role: Role.AUTHOR },
+        });
+
+        await tx.author.create({
+          data: { userId: application.userId, name: appliedUser.id },
         });
       }
 

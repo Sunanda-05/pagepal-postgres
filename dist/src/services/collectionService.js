@@ -42,7 +42,6 @@ const getAllPublicCollectionsService = () => __awaiter(void 0, void 0, void 0, f
                                 author: {
                                     select: {
                                         id: true,
-                                        email: true,
                                         name: true,
                                     },
                                 },
@@ -75,7 +74,6 @@ const getMyCollectionsService = (userId) => __awaiter(void 0, void 0, void 0, fu
                                 author: {
                                     select: {
                                         id: true,
-                                        email: true,
                                         name: true,
                                     },
                                 },
@@ -121,7 +119,6 @@ const getCollectionByIdService = (collectionId, userId) => __awaiter(void 0, voi
                                 author: {
                                     select: {
                                         id: true,
-                                        email: true,
                                         name: true,
                                     },
                                 },

@@ -47,7 +47,11 @@ const loginUser = (request, response) => __awaiter(void 0, void 0, void 0, funct
         });
         response.status(200).json({
             message: "Login successful!",
-            email,
+            user: {
+                email,
+                username: user.username,
+                role: user.role,
+            },
             accessToken,
         });
     }
@@ -108,9 +112,9 @@ const logoutUser = (request, response) => __awaiter(void 0, void 0, void 0, func
 exports.logoutUser = logoutUser;
 const registerUser = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email, password, name } = request.body;
-        if (!email || !password) {
-            response.status(400).json({ error: "Email & Password are required." });
+        const { email, password, name, username } = request.body;
+        if (!email || !password || !username) {
+            response.status(400).json({ error: "Email, Username & Password are required." });
             return;
         }
         const userExists = yield (0, authService_1.getUserByEmail)(email);
@@ -119,7 +123,7 @@ const registerUser = (request, response) => __awaiter(void 0, void 0, void 0, fu
             return;
         }
         const passwordHash = yield bcryptjs_1.default.hash(password, 10);
-        const userData = { email, passwordHash, name };
+        const userData = { email, passwordHash, name, username };
         const user = yield (0, authService_1.createUser)(userData);
         response.status(201).json(user);
     }
