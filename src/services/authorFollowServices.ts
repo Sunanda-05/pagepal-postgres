@@ -20,13 +20,20 @@ const getAuthorFollowersService = async (authorId: string) => {
     });
     return followers;
   } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
     console.error(error);
-    throw new Error("Error fetching author followers");
+    throw new ApiError(500, "Error fetching author followers");
   }
 };
 
 const followAuthorService = async (followerId: string, authorId: string) => {
   try {
+    if (!followerId || !authorId) {
+      throw new ApiError(400, "Missing follower id or author id");
+    }
+
     const existingFollow = await prisma.authorFollow.findUnique({
       where: {
         followerId_authorId: {
@@ -48,13 +55,36 @@ const followAuthorService = async (followerId: string, authorId: string) => {
     });
     return newFollow;
   } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
     console.error(error);
-    throw new Error("Error following author");
+    throw new ApiError(500, "Error following author");
   }
 };
 
 const unfollowAuthorService = async (followerId: string, authorId: string) => {
   try {
+    if (!followerId || !authorId) {
+      throw new ApiError(400, "Missing follower id or author id");
+    }
+
+    const existingFollow = await prisma.authorFollow.findUnique({
+      where: {
+        followerId_authorId: {
+          followerId,
+          authorId,
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!existingFollow) {
+      throw new ApiError(400, "Not following this author");
+    }
+
     const unfollow = await prisma.authorFollow.delete({
       where: {
         followerId_authorId: {
@@ -69,8 +99,11 @@ const unfollowAuthorService = async (followerId: string, authorId: string) => {
     }
     return unfollow;
   } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
     console.error(error);
-    throw new Error("Error unfollowing author");
+    throw new ApiError(500, "Error unfollowing author");
   }
 };
 

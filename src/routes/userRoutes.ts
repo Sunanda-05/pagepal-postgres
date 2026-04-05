@@ -7,7 +7,13 @@ import {
 import authMiddleware from "../middlewares/authMiddleware";
 import { setUserContext } from "../config/context";
 import { asyncHandler } from "../utils/asyncHandler";
-import { followUser, unfollowUser } from "../controllers/followController";
+import {
+  followUser,
+  getUserFollowers,
+  getUserFollowings,
+  removeFollower,
+  unfollowUser,
+} from "../controllers/followController";
 import { getRecommendations } from "../controllers/recommendationController";
 
 const router = Router({ mergeParams: true });
@@ -32,6 +38,28 @@ router.post(
   setUserContext,
   followUser
 );
+
+router.get(
+  "/:id/followers",
+  asyncHandler(authMiddleware),
+  setUserContext,
+  getUserFollowers
+);
+
+router.get(
+  "/:id/following",
+  asyncHandler(authMiddleware),
+  setUserContext,
+  getUserFollowings
+);
+
+router.delete(
+  "/:id/remove-follower",
+  asyncHandler(authMiddleware),
+  setUserContext,
+  removeFollower
+);
+
 router.delete(
   "/:id/unfollow",
   asyncHandler(authMiddleware),
