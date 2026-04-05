@@ -29,10 +29,12 @@ export const applyAsAuthor = async (
   try {
     const user = request.user;
     if (!user) throw new ApiError(401, "Not a user");
-    if (user?.role === "USER") throw new ApiError(401, "Not a user");
+    if (user.role !== "USER") {
+      throw new ApiError(403, "Only USER accounts can apply as author");
+    }
 
     const bio = request.body.bio as string;
-    const application = await applyAuthorService(user?.id, bio);
+    const application = await applyAuthorService(user.id, bio);
     response.status(201).json(application);
   } catch (error) {
     next(error);

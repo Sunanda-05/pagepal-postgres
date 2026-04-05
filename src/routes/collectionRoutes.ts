@@ -34,6 +34,12 @@ router.get(
   getMyCollections
 );
 router.get(
+  "/shared",
+  asyncHandler(authMiddleware),
+  setUserContext,
+  getCollectionsSharedWithMe
+);
+router.get(
   "/:id",
   asyncHandler(authMiddleware),
   setUserContext,
@@ -76,12 +82,6 @@ router.post(
   asyncHandler(authMiddleware),
   setUserContext,
   shareCollection
-);
-router.get(
-  "/shared",
-  asyncHandler(authMiddleware),
-  setUserContext,
-  getCollectionsSharedWithMe
 );
 
 export default router;

@@ -25,7 +25,11 @@ const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         const decoded = jsonwebtoken_1.default.verify(token, ACCESS_TOKEN_SECRET);
         const user = yield db_1.default.user.findUnique({
             where: { id: decoded.userId },
+            include: {
+                author: true
+            }
         });
+        console.log({ user });
         if (!user) {
             return res.status(401).json({ error: "User not found." });
         }

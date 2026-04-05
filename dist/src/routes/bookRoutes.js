@@ -16,8 +16,8 @@ router.get("/", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), cont
 router.get("/filters", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.getFilteredBooks);
 router.get("/:id", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.getBookById);
 router.post("/", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.addBook);
-router.patch("/", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.updateBook);
-router.delete("/", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.deleteBook);
+router.patch("/:id", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.updateBook);
+router.delete("/:id", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookController_1.deleteBook);
 router.post("/:id/tag", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, bookTagController_1.addBooktag);
 router.use("/:id/ratings", ratingRoutes_1.default);
 router.use("/:id/reviews", reviewRoutes_1.default);

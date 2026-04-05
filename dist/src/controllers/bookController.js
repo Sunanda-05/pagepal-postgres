@@ -50,6 +50,7 @@ const getFilteredBooks = (request, response, next) => __awaiter(void 0, void 0, 
             publishedYear: +((_d = request.query.publishedYear) !== null && _d !== void 0 ? _d : ""),
         };
         const books = yield (0, bookService_1.getFilteredBooksService)(query);
+        console.dir({ books }, { depth: null });
         response.status(200).json(books);
     }
     catch (error) {
@@ -71,9 +72,11 @@ const getBookById = (request, response, next) => __awaiter(void 0, void 0, void 
 });
 exports.getBookById = getBookById;
 const addBook = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         const user = request.user;
-        if ((user === null || user === void 0 ? void 0 : user.role) !== "AUTHOR")
+        console.log({ user });
+        if ((user === null || user === void 0 ? void 0 : user.role) !== "AUTHOR" || !((_a = user.author) === null || _a === void 0 ? void 0 : _a.id))
             throw new ApiError_1.default(401, "Not an Author");
         const bookDetails = {
             title: request.body.title,
@@ -81,8 +84,9 @@ const addBook = (request, response, next) => __awaiter(void 0, void 0, void 0, f
             description: request.body.description,
             isbn: request.body.isbn,
             publishedYear: request.body.publishedYear,
-            authorId: user.id,
+            authorId: user.author.id,
         };
+        console.log({ bookDetails });
         const book = yield (0, bookService_1.addBookService)(bookDetails);
         response.status(201).json(book);
     }
@@ -92,12 +96,12 @@ const addBook = (request, response, next) => __awaiter(void 0, void 0, void 0, f
 });
 exports.addBook = addBook;
 const updateBook = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b, _c, _d;
     try {
         const user = request.user;
-        if ((user === null || user === void 0 ? void 0 : user.role) !== "AUTHOR")
+        if ((user === null || user === void 0 ? void 0 : user.role) !== "AUTHOR" || !((_a = user.author) === null || _a === void 0 ? void 0 : _a.id))
             throw new ApiError_1.default(401, "Not an Author");
-        const bookId = (_a = request === null || request === void 0 ? void 0 : request.params) === null || _a === void 0 ? void 0 : _a.id;
+        const bookId = (_b = request === null || request === void 0 ? void 0 : request.params) === null || _b === void 0 ? void 0 : _b.id;
         if (!bookId)
             throw new ApiError_1.default(400, "No Book ID provided");
         const updatedFields = {};
@@ -111,7 +115,7 @@ const updateBook = (request, response, next) => __awaiter(void 0, void 0, void 0
             updatedFields.isbn = request.body.isbn;
         if ("publishedYear" in request.body)
             updatedFields.publishedYear = request.body.publishedYear;
-        const book = yield (0, bookService_1.updateBookService)(bookId, user.id, updatedFields);
+        const book = yield (0, bookService_1.updateBookService)(bookId, (_d = (_c = user.author) === null || _c === void 0 ? void 0 : _c.id) !== null && _d !== void 0 ? _d : "", updatedFields);
         response.status(200).json(book);
     }
     catch (error) {
@@ -120,15 +124,15 @@ const updateBook = (request, response, next) => __awaiter(void 0, void 0, void 0
 });
 exports.updateBook = updateBook;
 const deleteBook = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b, _c, _d;
     try {
         const user = request.user;
-        if ((user === null || user === void 0 ? void 0 : user.role) !== "AUTHOR")
+        if ((user === null || user === void 0 ? void 0 : user.role) !== "AUTHOR" || !((_a = user.author) === null || _a === void 0 ? void 0 : _a.id))
             throw new ApiError_1.default(401, "Not an Author");
-        const bookId = (_a = request === null || request === void 0 ? void 0 : request.params) === null || _a === void 0 ? void 0 : _a.id;
+        const bookId = (_b = request === null || request === void 0 ? void 0 : request.params) === null || _b === void 0 ? void 0 : _b.id;
         if (!bookId)
             throw new ApiError_1.default(400, "No Book ID provided");
-        const book = yield (0, bookService_1.deleteBookService)(bookId, user.id);
+        const book = yield (0, bookService_1.deleteBookService)(bookId, (_d = (_c = user.author) === null || _c === void 0 ? void 0 : _c.id) !== null && _d !== void 0 ? _d : "");
         response.status(200).json(book);
     }
     catch (error) {

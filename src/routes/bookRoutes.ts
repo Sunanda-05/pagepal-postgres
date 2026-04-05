@@ -27,8 +27,8 @@ router.get(
 );
 router.get("/:id", asyncHandler(authMiddleware), setUserContext, getBookById);
 router.post("/", asyncHandler(authMiddleware), setUserContext, addBook);
-router.patch("/", asyncHandler(authMiddleware), setUserContext, updateBook);
-router.delete("/", asyncHandler(authMiddleware), setUserContext, deleteBook);
+router.patch("/:id", asyncHandler(authMiddleware), setUserContext, updateBook);
+router.delete("/:id", asyncHandler(authMiddleware), setUserContext, deleteBook);
 
 router.post("/:id/tag", asyncHandler(authMiddleware), setUserContext, addBooktag);
 

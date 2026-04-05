@@ -26,6 +26,7 @@ const getAllBooksService = (query) => __awaiter(void 0, void 0, void 0, function
             take: limit,
             orderBy: { [sortBy]: sortOrder },
             select: {
+                id: true,
                 title: true,
                 genre: true,
                 publishedYear: true,
@@ -78,6 +79,7 @@ const getFilteredBooksService = (query) => __awaiter(void 0, void 0, void 0, fun
             take: limit,
             orderBy: { [sortBy]: sortOrder },
             select: {
+                id: true,
                 title: true,
                 genre: true,
                 publishedYear: true,

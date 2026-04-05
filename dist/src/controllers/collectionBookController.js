@@ -16,7 +16,7 @@ exports.removeBookFromCollection = exports.addBookToCollection = void 0;
 const collectionBookService_1 = require("../services/collectionBookService");
 const ApiError_1 = __importDefault(require("../utils/ApiError"));
 const addBookToCollection = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c;
+    var _a, _b;
     try {
         const userId = (_a = request.user) === null || _a === void 0 ? void 0 : _a.id;
         if (!userId)
@@ -27,7 +27,7 @@ const addBookToCollection = (request, response, next) => __awaiter(void 0, void 
         const collectionBookDetails = {
             readingStatus: request.body.readingStatus,
             collectionId,
-            bookId: (_c = request.body.isPublic) !== null && _c !== void 0 ? _c : false,
+            bookId: request.body.bookId,
             userId,
         };
         const book = yield (0, collectionBookService_1.addCollectionBookService)(collectionBookDetails);

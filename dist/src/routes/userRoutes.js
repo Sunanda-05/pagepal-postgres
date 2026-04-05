@@ -13,8 +13,8 @@ const recommendationController_1 = require("../controllers/recommendationControl
 const router = (0, express_1.Router)({ mergeParams: true });
 router.get("/me", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, userController_1.getMyProfile);
 router.patch("/", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, userController_1.updateProfile);
+router.get("/recommendations", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, recommendationController_1.getRecommendations);
 router.get("/:id", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, userController_1.getOtherProfileById);
 router.post("/:id/follow", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, followController_1.followUser);
 router.delete("/:id/unfollow", (0, asyncHandler_1.asyncHandler)(authMiddleware_1.default), context_1.setUserContext, followController_1.unfollowUser);
-router.get("/recommendations", recommendationController_1.getRecommendations);
 exports.default = router;

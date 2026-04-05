@@ -15,6 +15,12 @@ const router = Router({ mergeParams: true });
 router.get("/me", asyncHandler(authMiddleware), setUserContext, getMyProfile);
 router.patch("/", asyncHandler(authMiddleware), setUserContext, updateProfile);
 router.get(
+  "/recommendations",
+  asyncHandler(authMiddleware),
+  setUserContext,
+  getRecommendations
+);
+router.get(
   "/:id",
   asyncHandler(authMiddleware),
   setUserContext,
@@ -33,5 +39,4 @@ router.delete(
   unfollowUser
 );
 
-router.get("/recommendations", getRecommendations)
 export default router;

@@ -20,7 +20,7 @@ export const addBookToCollection = async (
     const collectionBookDetails = {
       readingStatus: request.body.readingStatus,
       collectionId,
-      bookId: request.body.isPublic ?? false,
+      bookId: request.body.bookId,
       userId,
     };
 

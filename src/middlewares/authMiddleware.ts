@@ -20,8 +20,12 @@ const authMiddleware = async (
     const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET) as AuthTokenPayload;
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
+      include: {
+        author: true
+      }
     });
 
+    console.log({user})
     if (!user) {
       return res.status(401).json({ error: "User not found." });
     }

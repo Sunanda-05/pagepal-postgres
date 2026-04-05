@@ -69,7 +69,7 @@ const refreshTokens = (request, response) => __awaiter(void 0, void 0, void 0, f
             response.status(401).json({ error: "No refresh token provided." });
             return;
         }
-        const dbToken = (0, tokenService_1.getRefreshToken)(refreshToken);
+        const dbToken = yield (0, tokenService_1.getRefreshToken)(refreshToken);
         if (!dbToken) {
             response.status(401).json({ error: "Invalid refresh token" });
             return;

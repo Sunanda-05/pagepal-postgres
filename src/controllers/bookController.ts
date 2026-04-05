@@ -53,6 +53,7 @@ export const getFilteredBooks = async (
       publishedYear: +(request.query.publishedYear ?? ""),
     };
     const books = await getFilteredBooksService(query);
+    console.dir({books}, {depth: null})
     response.status(200).json(books);
   } catch (error) {
     next(error);
@@ -82,7 +83,8 @@ export const addBook = async (
 ) => {
   try {
     const user = request.user;
-    if (user?.role !== "AUTHOR") throw new ApiError(401, "Not an Author");
+    console.log({user})
+    if (user?.role !== "AUTHOR" || !user.author?.id) throw new ApiError(401, "Not an Author");
 
     const bookDetails: Omit<
       Book,
@@ -93,9 +95,10 @@ export const addBook = async (
       description: request.body.description,
       isbn: request.body.isbn,
       publishedYear: request.body.publishedYear,
-      authorId: user.id,
+      authorId: user.author.id,
     };
 
+    console.log({bookDetails})
     const book = await addBookService(bookDetails);
     response.status(201).json(book);
   } catch (error) {
@@ -110,7 +113,7 @@ export const updateBook = async (
 ) => {
   try {
     const user = request.user;
-    if (user?.role !== "AUTHOR") throw new ApiError(401, "Not an Author");
+    if (user?.role !== "AUTHOR" || !user.author?.id) throw new ApiError(401, "Not an Author");
 
     const bookId = request?.params?.id;
     if (!bookId) throw new ApiError(400, "No Book ID provided");
@@ -125,7 +128,7 @@ export const updateBook = async (
     if ("publishedYear" in request.body)
       updatedFields.publishedYear = request.body.publishedYear;
 
-    const book = await updateBookService(bookId, user.id, updatedFields);
+    const book = await updateBookService(bookId, user.author?.id ?? "", updatedFields);
     response.status(200).json(book);
   } catch (error) {
     next(error);
@@ -139,12 +142,12 @@ export const deleteBook = async (
 ) => {
   try {
     const user = request.user;
-    if (user?.role !== "AUTHOR") throw new ApiError(401, "Not an Author");
+    if (user?.role !== "AUTHOR" || !user.author?.id) throw new ApiError(401, "Not an Author");
 
     const bookId = request?.params?.id;
     if (!bookId) throw new ApiError(400, "No Book ID provided");
 
-    const book = await deleteBookService(bookId, user.id);
+    const book = await deleteBookService(bookId, user.author?.id ?? "");
     response.status(200).json(book);
   } catch (error) {
     next(error);

@@ -21,6 +21,7 @@ const getAllBooksService = async (query: Query) => {
       take: limit,
       orderBy: { [sortBy]: sortOrder },
       select: {
+        id: true,
         title: true,
         genre: true,
         publishedYear: true,
@@ -87,6 +88,7 @@ const getFilteredBooksService = async (query: FilterQuery) => {
       take: limit,
       orderBy: { [sortBy]: sortOrder },
       select: {
+        id: true,
         title: true,
         genre: true,
         publishedYear: true,

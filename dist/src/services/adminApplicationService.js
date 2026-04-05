@@ -19,6 +19,7 @@ const getAllApplyService = (status) => __awaiter(void 0, void 0, void 0, functio
     try {
         const applications = yield db_1.default.authorApplication.findMany({
             where: { status: status },
+            include: { user: true },
         });
         return applications;
     }
@@ -52,7 +53,7 @@ const reviewApplyService = (id, adminId, status, reason) => __awaiter(void 0, vo
                     data: { role: generated_1.Role.AUTHOR },
                 });
                 yield tx.author.create({
-                    data: { userId: application.userId, name: appliedUser.id },
+                    data: { userId: application.userId, name: appliedUser.name },
                 });
             }
             return application;

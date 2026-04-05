@@ -5,6 +5,7 @@ const getAllApplyService = async (status?: ApplicationStatus) => {
   try {
     const applications = await prisma.authorApplication.findMany({
       where: { status: status },
+      include: { user: true },
     });
     return applications;
   } catch (error) {
@@ -44,7 +45,7 @@ const reviewApplyService = async (
         });
 
         await tx.author.create({
-          data: { userId: application.userId, name: appliedUser.id },
+          data: { userId: application.userId, name: appliedUser.name },
         });
       }
 

@@ -76,7 +76,7 @@ export const refreshTokens = async (
       response.status(401).json({ error: "No refresh token provided." });
       return;
     }
-    const dbToken = getRefreshToken(refreshToken);
+    const dbToken = await getRefreshToken(refreshToken);
     if (!dbToken) {
       response.status(401).json({ error: "Invalid refresh token" });
       return;

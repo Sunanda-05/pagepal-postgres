@@ -34,10 +34,11 @@ const applyAsAuthor = (request, response, next) => __awaiter(void 0, void 0, voi
         const user = request.user;
         if (!user)
             throw new ApiError_1.default(401, "Not a user");
-        if ((user === null || user === void 0 ? void 0 : user.role) === "USER")
-            throw new ApiError_1.default(401, "Not a user");
+        if (user.role !== "USER") {
+            throw new ApiError_1.default(403, "Only USER accounts can apply as author");
+        }
         const bio = request.body.bio;
-        const application = yield (0, authorApplicationService_1.applyAuthorService)(user === null || user === void 0 ? void 0 : user.id, bio);
+        const application = yield (0, authorApplicationService_1.applyAuthorService)(user.id, bio);
         response.status(201).json(application);
     }
     catch (error) {
