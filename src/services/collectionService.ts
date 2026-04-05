@@ -80,7 +80,7 @@ const getMyCollectionsService = async (userId: string) => {
 
 const getCollectionByIdService = async (
   collectionId: string,
-  userId: string
+  userId: string,
 ) => {
   try {
     const collection = await prisma.collection.findUnique({
@@ -99,6 +99,12 @@ const getCollectionByIdService = async (
         ],
       },
       include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         books: {
           select: {
             book: {
@@ -127,7 +133,7 @@ const getCollectionByIdService = async (
 };
 
 const createCollectionService = async (
-  collectionData: Omit<Collection, "id" | "createdAt" | "updatedAt">
+  collectionData: Omit<Collection, "id" | "createdAt" | "updatedAt">,
 ) => {
   try {
     const newCollection = await prisma.collection.create({
@@ -142,7 +148,7 @@ const createCollectionService = async (
 
 const updateCollectionService = async (
   collectionId: string,
-  collectionData: Partial<Collection>
+  collectionData: Partial<Collection>,
 ) => {
   try {
     const updatedCollection = await prisma.collection.update({
@@ -156,7 +162,10 @@ const updateCollectionService = async (
   }
 };
 
-const deleteCollectionService = async (collectionId: string, userId: string) => {
+const deleteCollectionService = async (
+  collectionId: string,
+  userId: string,
+) => {
   try {
     const deletedCollection = await prisma.collection.delete({
       where: { id: collectionId, userId },

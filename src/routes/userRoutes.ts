@@ -1,7 +1,9 @@
 import { Router } from "express";
 import {
+  getFollowSuggestions,
   getMyProfile,
   getOtherProfileById,
+  searchUsers,
   updateProfile,
 } from "../controllers/userController";
 import authMiddleware from "../middlewares/authMiddleware";
@@ -20,6 +22,13 @@ const router = Router({ mergeParams: true });
 
 router.get("/me", asyncHandler(authMiddleware), setUserContext, getMyProfile);
 router.patch("/", asyncHandler(authMiddleware), setUserContext, updateProfile);
+router.get("/search", asyncHandler(authMiddleware), setUserContext, searchUsers);
+router.get(
+  "/suggestions",
+  asyncHandler(authMiddleware),
+  setUserContext,
+  getFollowSuggestions
+);
 router.get(
   "/recommendations",
   asyncHandler(authMiddleware),

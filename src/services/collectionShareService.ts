@@ -7,6 +7,10 @@ const shareCollectionService = async (
   ownerId: string
 ) => {
   try {
+    if (ownerId === userId) {
+      throw new ApiError(400, "You cannot share a collection with yourself");
+    }
+
     const [user, ownedCollection] = await Promise.all([
       prisma.user.findUnique({
         where: {
@@ -25,6 +29,22 @@ const shareCollectionService = async (
     if (!ownedCollection)
       throw new ApiError(403, "Collection not found or not owned by user");
 
+    const existingShare = await prisma.sharedCollectionAccess.findUnique({
+      where: {
+        collectionId_userId: {
+          collectionId,
+          userId,
+        },
+      },
+      select: {
+        collectionId: true,
+      },
+    });
+
+    if (existingShare) {
+      throw new ApiError(409, "Collection is already shared with this user");
+    }
+
     const sharedAccess = await prisma.sharedCollectionAccess.create({
       data: {
         userId,
@@ -34,8 +54,11 @@ const shareCollectionService = async (
 
     return sharedAccess;
   } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
     console.error(error);
-    throw new Error("Failed to share collection");
+    throw new ApiError(500, "Failed to share collection");
   }
 };
 
@@ -81,8 +104,11 @@ const getSharedCollectionsService = async (userId: string) => {
 
     return sharedCollections;
   } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
     console.error(error);
-    throw new Error("Error fetching public collections");
+    throw new ApiError(500, "Error fetching shared collections");
   }
 };
 

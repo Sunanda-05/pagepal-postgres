@@ -33,7 +33,9 @@ export const reviewBook = async (
     if (!user) throw new ApiError(400, "No User ID provided");
 
     const reviewText = request.body.review;
-    if (!reviewText) throw new ApiError(400, "No Review Text provided");
+    if (typeof reviewText !== "string" || reviewText.trim().length === 0) {
+      throw new ApiError(400, "No Review Text provided");
+    }
 
     const bookId = request.params.id;
     if (!bookId) throw new ApiError(400, "No Book ID provided");
@@ -58,6 +60,10 @@ export const updateReview = async (
     if (!reviewId) throw new ApiError(400, "No Review ID provided");
 
     const reviewText = request.body.review;
+    if (typeof reviewText !== "string" || reviewText.trim().length === 0) {
+      throw new ApiError(400, "No Review Text provided");
+    }
+
     const updatedReview = await updateReviewService(
       reviewId,
       userId,
