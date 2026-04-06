@@ -13,6 +13,13 @@ This service is organized with a layered backend architecture:
 
 The API includes user and author social features, collection sharing, and a lightweight non-ML recommendation system based on review sentiment and user ratings.
 
+## Related Frontend Project
+
+This backend powers the PagePal Next.js frontend, which handles the full reading-product experience: onboarding, discovery, shelf and collection UX, social flows, author/admin dashboards, and theme personalization.
+
+Frontend GitHub link: [Frontend repository URL](https://github.com/Sunanda-05/pagepal-frontend)
+<img src="./images/frontend.png" alt="Swagger API overview and auth endpoints" width="520" />
+
 ## Tech Stack
 
 - Runtime: Node.js
@@ -28,19 +35,19 @@ The API includes user and author social features, collection sharing, and a ligh
 
 ## Core Features and Implementation
 
-| Feature | Description | Implementation Keywords |
-| --- | --- | --- |
-| Authentication and Session Management | User registration, login, logout, refresh token flow | bcrypt hash/compare, jsonwebtoken, httpOnly cookie, refresh token table |
-| Role-Based Access Control | USER, AUTHOR, ADMIN permissions across feature areas | Prisma Role enum, controller role checks, protected routes |
-| Book Catalog Management | Create, update, list, filter, and soft-delete books | Prisma CRUD, deletedAt soft delete, paginated queries, dynamic sorting |
-| Ratings and Reviews | Users can rate and review books with ownership checks on edits | composite unique constraints, validation, ownership authorization |
-| Tagging System | Create tags and attach tags to books | Tag and BookTag join model, duplicate prevention, author ownership checks |
-| Collections and Reading Status | Personal/public collections with reading progress states | Collection + CollectionBook models, ReadingStatus enum, owner checks |
-| Collection Sharing | Share collections with specific users and fetch shared collections | SharedCollectionAccess join table, uniqueness checks, access validation |
-| Social Graph | Follow and unfollow users/authors, fetch followers/following, suggestions | Follow and AuthorFollow models, pagination, self-follow prevention |
-| Author Application Workflow | USER can apply to become AUTHOR, ADMIN can review and approve/reject | AuthorApplication model, transactional review flow, role promotion |
-| Recommendation Engine | Personalized ranking of unread books | sentiment keyword scoring, weighted ratings, sorted relevance list |
-| Audit Logging | Audit logging pipeline and schema for write-operation tracking | AsyncLocalStorage context, Prisma extension hooks, AuditLog model |
+| Feature                               | Description                                                               | Implementation Keywords                                                   |
+| ------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Authentication and Session Management | User registration, login, logout, refresh token flow                      | bcrypt hash/compare, jsonwebtoken, httpOnly cookie, refresh token table   |
+| Role-Based Access Control             | USER, AUTHOR, ADMIN permissions across feature areas                      | Prisma Role enum, controller role checks, protected routes                |
+| Book Catalog Management               | Create, update, list, filter, and soft-delete books                       | Prisma CRUD, deletedAt soft delete, paginated queries, dynamic sorting    |
+| Ratings and Reviews                   | Users can rate and review books with ownership checks on edits            | composite unique constraints, validation, ownership authorization         |
+| Tagging System                        | Create tags and attach tags to books                                      | Tag and BookTag join model, duplicate prevention, author ownership checks |
+| Collections and Reading Status        | Personal/public collections with reading progress states                  | Collection + CollectionBook models, ReadingStatus enum, owner checks      |
+| Collection Sharing                    | Share collections with specific users and fetch shared collections        | SharedCollectionAccess join table, uniqueness checks, access validation   |
+| Social Graph                          | Follow and unfollow users/authors, fetch followers/following, suggestions | Follow and AuthorFollow models, pagination, self-follow prevention        |
+| Author Application Workflow           | USER can apply to become AUTHOR, ADMIN can review and approve/reject      | AuthorApplication model, transactional review flow, role promotion        |
+| Recommendation Engine                 | Personalized ranking of unread books                                      | sentiment keyword scoring, weighted ratings, sorted relevance list        |
+| Audit Logging                         | Audit logging pipeline and schema for write-operation tracking            | AsyncLocalStorage context, Prisma extension hooks, AuditLog model         |
 
 ## How Key Features Are Implemented
 
@@ -82,19 +89,31 @@ The API includes user and author social features, collection sharing, and a ligh
 
 ## API Modules
 
-| Base Path | Responsibility |
-| --- | --- |
-| /auth | Register, login, logout, token refresh |
-| /user | Profile, search, follow suggestions, recommendations, follow graph |
-| /books | Book listing/filtering/detail and author-managed CRUD |
-| /books/:id/ratings | Book rating create/list |
-| /books/:id/reviews | Book review create/update/delete/list |
-| /collection | Public collections, personal collections, sharing, collection books |
-| /tag | Tag listing, creation, books by tag |
-| /author | Author application submit and self-status |
-| /admin | Admin review flow for author applications |
+| Base Path          | Responsibility                                                      |
+| ------------------ | ------------------------------------------------------------------- |
+| /auth              | Register, login, logout, token refresh                              |
+| /user              | Profile, search, follow suggestions, recommendations, follow graph  |
+| /books             | Book listing/filtering/detail and author-managed CRUD               |
+| /books/:id/ratings | Book rating create/list                                             |
+| /books/:id/reviews | Book review create/update/delete/list                               |
+| /collection        | Public collections, personal collections, sharing, collection books |
+| /tag               | Tag listing, creation, books by tag                                 |
+| /author            | Author application submit and self-status                           |
+| /admin             | Admin review flow for author applications                           |
 
 Swagger UI is available at /api-docs.
+
+## API Gallery
+
+These screenshots show the documented API surface from Swagger UI.
+
+| API overview and auth endpoints                                                             | User, tag, and book endpoints                                                                   |
+| ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| <img src="./images/image0.png" alt="Swagger API overview and auth endpoints" width="520" /> | <img src="./images/image1.png" alt="Swagger user, tag, and book endpoint groups" width="520" /> |
+
+| Collection and rating endpoints                                                                   | Review endpoints and schema models                                                                   |
+| ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| <img src="./images/image2.png" alt="Swagger collection and rating endpoint groups" width="520" /> | <img src="./images/image3.png" alt="Swagger review endpoint group and schema section" width="520" /> |
 
 ## Database Design Highlights
 

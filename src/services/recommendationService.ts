@@ -75,7 +75,8 @@ export const generateRecommendations = async (userId: string) => {
     }
 
     const allBooks = await prisma.book.findMany({
-      where: { id: { notIn: reviews.map((r) => r.bookId) } },
+      where: { id: { notIn: reviews.map((r) => r.bookId) }},
+      include: { author: true },
     });
 
     const recommendedBooks = allBooks
@@ -85,6 +86,7 @@ export const generateRecommendations = async (userId: string) => {
       }))
       .sort((a, b) => b.score - a.score);
 
+      console.log({recommendedBooks})
     return recommendedBooks;
   } catch (error) {
     console.error("Error generating recommendations:", error);

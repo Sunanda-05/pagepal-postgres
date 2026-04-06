@@ -47,7 +47,7 @@ export const loginUser = async (
       httpOnly: true, // Prevents XSS (JavaScript cannot access it)
       secure: false, // Only send over HTTPS     //make to true when https
       sameSite: "lax", // Prevents most CSRF attacks
-      path: "/auth", // Restrict usage to refresh endpoint
+      path: "/", // Required so refresh also works through frontend proxy paths
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -114,6 +114,7 @@ export const logoutUser = async (
       console.log("first");
     }
 
+    response.clearCookie("refreshtoken", { path: "/" });
     response.clearCookie("refreshtoken", { path: "/auth" });
     response.json({ message: "Logged out successfully" });
   } catch (error) {
